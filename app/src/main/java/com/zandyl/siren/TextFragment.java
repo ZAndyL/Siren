@@ -4,6 +4,7 @@ import android.app.Fragment;
 import android.app.FragmentTransaction;
 import android.content.Intent;
 import android.media.MediaPlayer;
+import android.media.MediaRecorder;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -29,14 +30,16 @@ public class TextFragment extends Fragment {
     String input;
     public final static String INPUT_KEY = "input";
 
+
+
     public TextFragment(){}
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
-        View settingView = inflater.inflate(R.layout.fragment_text, container, false);
+        View textView = inflater.inflate(R.layout.fragment_text, container, false);
 
-        Button talkButton = (Button)settingView.findViewById(R.id.Talk);
+        Button talkButton = (Button)textView.findViewById(R.id.Talk);
         talkButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -44,8 +47,10 @@ public class TextFragment extends Fragment {
             }
         });
 
-        minputText = (EditText)settingView.findViewById(R.id.inputText);
-        return settingView;
+        minputText = (EditText)textView.findViewById(R.id.inputText);
+
+
+        return textView;
     }
 
     public void talkButton() {
@@ -55,5 +60,39 @@ public class TextFragment extends Fragment {
         Intent intent = new Intent(getActivity(), DisplayActivity.class);
         intent.putExtra(INPUT_KEY, input);
         startActivity(intent);
+
+//        String formattedInput = input.replace(' ', '+');
+//        Toast.makeText(getActivity().getApplicationContext(),"download started", Toast.LENGTH_SHORT).show();
+
+        //Toast.makeText(getActivity().getApplicationContext(), formattedInput, Toast.LENGTH_SHORT).show();
+
+//        Ion.with(getActivity().getApplicationContext())
+//                .load("http://tts-api.com/tts.mp3?q=" + formattedInput)
+//                .write(new File("/sdcard/test.mp3"))
+//                .setCallback(new FutureCallback<File>() {
+//                    @Override
+//                    public void onCompleted(Exception e, File file) {
+//                        Toast.makeText(getActivity().getApplicationContext(), "download completed", Toast.LENGTH_SHORT).show();
+//
+//                        if (e != null) {
+//                            e.printStackTrace();
+//                        }
+//                        if (file == null) {
+//                            System.out.println("file is null");
+//                        }
+//
+//                        MediaPlayer mediaPlayer = new MediaPlayer();
+//                        try {
+//                            mediaPlayer.setDataSource(file.getPath());
+//                            mediaPlayer.prepare();
+//                            mediaPlayer.start();
+//                            System.out.println("should be playing");
+//                        } catch (IOException e1) {
+//                            e1.printStackTrace();
+//                        }
+//                    }
+//                });
     }
+
+
 }
