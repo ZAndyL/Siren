@@ -2,12 +2,18 @@ package com.zandyl.siren;
 
 import android.app.Activity;
 import android.app.FragmentTransaction;
+
+import android.app.Activity;
+import android.content.DialogInterface;
 import android.media.MediaPlayer;
 import android.os.Bundle;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.view.View;
+import android.widget.Button;
 import android.widget.Toast;
 
+import com.ibm.mobile.services.core.IBMBluemix;
 import com.koushikdutta.async.future.FutureCallback;
 import com.koushikdutta.ion.Ion;
 
@@ -28,6 +34,44 @@ public class MainActivity extends Activity {
             ft.replace(R.id.content_frame, new TextFragment());
             ft.commit();
         }
+
+        Button talkButton = (Button)findViewById(R.id.Talk);
+        talkButton.setOnClickListener(talkButtonListener);
+    }
+
+    @Override
+    public boolean onCreateOptionsMenu(Menu menu) {
+        // Inflate the menu; this adds items to the action bar if it is present.
+        getMenuInflater().inflate(R.menu.menu_main, menu);
+        return true;
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        // Handle action bar item clicks here. The action bar will
+        // automatically handle clicks on the Home/Up button, so long
+        // as you specify a parent activity in AndroidManifest.xml.
+        int id = item.getItemId();
+
+        //noinspection SimplifiableIfStatement
+        if (id == R.id.action_settings) {
+            return true;
+        }
+
+        return super.onOptionsItemSelected(item);
+    }
+
+    private View.OnClickListener talkButtonListener = new View.OnClickListener() {
+        public void onClick(View v) {
+            talkButton();
+        }
+    };
+
+    public void talkButton() {
+        Toast.makeText(getApplicationContext(), "download started", Toast.LENGTH_SHORT).show();
+
+        //bluemix initialization
+        IBMBluemix.initialize(MainActivity.this, "com.zandyl.siren", "303dfdef881587b4d0e3f4db9166fa83ba0f0002", "http://siren.mybluemix.net");
 
         Toast.makeText(getApplicationContext(),"download started", Toast.LENGTH_SHORT).show();
         Ion.with(getApplicationContext())
@@ -56,27 +100,8 @@ public class MainActivity extends Activity {
                         }
                     }
                 });
-    }
 
-    @Override
-    public boolean onCreateOptionsMenu(Menu menu) {
-        // Inflate the menu; this adds items to the action bar if it is present.
-        getMenuInflater().inflate(R.menu.menu_main, menu);
-        return true;
-    }
 
-    @Override
-    public boolean onOptionsItemSelected(MenuItem item) {
-        // Handle action bar item clicks here. The action bar will
-        // automatically handle clicks on the Home/Up button, so long
-        // as you specify a parent activity in AndroidManifest.xml.
-        int id = item.getItemId();
 
-        //noinspection SimplifiableIfStatement
-        if (id == R.id.action_settings) {
-            return true;
-        }
-
-        return super.onOptionsItemSelected(item);
     }
 }
