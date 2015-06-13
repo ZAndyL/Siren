@@ -2,10 +2,13 @@ package com.zandyl.siren;
 
 import android.app.Activity;
 import android.app.FragmentTransaction;
+import android.content.res.Resources;
 import android.os.Bundle;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
+import android.widget.ArrayAdapter;
+import android.widget.ListView;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.Toast;
@@ -36,6 +39,16 @@ public class MainActivity extends Activity {
             ft.replace(R.id.content_frame, new TextFragment());
             ft.commit();
         }
+
+        ListView list = (ListView)findViewById(R.id.left_drawer);
+        View header = (View)getLayoutInflater().inflate(R.layout.drawer_header,null);
+
+        list.addHeaderView(header);
+
+        Resources resources = getResources();
+        list.setAdapter(new ArrayAdapter<String>(this,
+            android.R.layout.simple_list_item_single_choice, resources.getStringArray(R.array.drawer_items)));
+
     }
 
     @Override
