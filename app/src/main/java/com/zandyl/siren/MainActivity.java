@@ -2,23 +2,11 @@ package com.zandyl.siren;
 
 import android.app.Activity;
 import android.app.FragmentTransaction;
-
-import android.app.Activity;
-import android.content.DialogInterface;
-import android.media.MediaPlayer;
 import android.os.Bundle;
 import android.view.Menu;
 import android.view.MenuItem;
-import android.view.View;
-import android.widget.Button;
-import android.widget.Toast;
 
-import com.ibm.mobile.services.core.IBMBluemix;
-import com.koushikdutta.async.future.FutureCallback;
-import com.koushikdutta.ion.Ion;
-
-import java.io.File;
-import java.io.IOException;
+//import com.ibm.mobile.services.core.IBMBluemix;
 
 
 public class MainActivity extends Activity {
@@ -35,8 +23,6 @@ public class MainActivity extends Activity {
             ft.commit();
         }
 
-        Button talkButton = (Button)findViewById(R.id.Talk);
-        talkButton.setOnClickListener(talkButtonListener);
     }
 
     @Override
@@ -61,47 +47,4 @@ public class MainActivity extends Activity {
         return super.onOptionsItemSelected(item);
     }
 
-    private View.OnClickListener talkButtonListener = new View.OnClickListener() {
-        public void onClick(View v) {
-            talkButton();
-        }
-    };
-
-    public void talkButton() {
-        Toast.makeText(getApplicationContext(), "download started", Toast.LENGTH_SHORT).show();
-
-        //bluemix initialization
-        IBMBluemix.initialize(MainActivity.this, "com.zandyl.siren", "303dfdef881587b4d0e3f4db9166fa83ba0f0002", "http://siren.mybluemix.net");
-
-        Toast.makeText(getApplicationContext(),"download started", Toast.LENGTH_SHORT).show();
-        Ion.with(getApplicationContext())
-                .load("http://tts-api.com/tts.mp3?q=hello+world.")
-                .write(new File("/sdcard/test.mp3"))
-                .setCallback(new FutureCallback<File>() {
-                    @Override
-                    public void onCompleted(Exception e, File file) {
-                        Toast.makeText(getApplicationContext(), "download completed", Toast.LENGTH_SHORT).show();
-
-                        if (e != null) {
-                            e.printStackTrace();
-                        }
-                        if (file == null) {
-                            System.out.println("file is null");
-                        }
-
-                        MediaPlayer mediaPlayer = new MediaPlayer();
-                        try {
-                            mediaPlayer.setDataSource(file.getPath());
-                            mediaPlayer.prepare();
-                            mediaPlayer.start();
-                            System.out.println("should be playing");
-                        } catch (IOException e1) {
-                            e1.printStackTrace();
-                        }
-                    }
-                });
-
-
-
-    }
 }
