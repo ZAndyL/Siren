@@ -1,9 +1,18 @@
 package com.zandyl.siren;
 
+import android.media.MediaPlayer;
 import android.support.v7.app.ActionBarActivity;
 import android.os.Bundle;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.widget.Toast;
+
+import com.koushikdutta.async.future.FutureCallback;
+import com.koushikdutta.ion.Ion;
+import com.koushikdutta.ion.ProgressCallback;
+
+import java.io.File;
+import java.io.IOException;
 
 
 public class MainActivity extends ActionBarActivity {
@@ -12,6 +21,34 @@ public class MainActivity extends ActionBarActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
+
+        Toast.makeText(getApplicationContext(),"download started", Toast.LENGTH_SHORT).show();
+        Ion.with(getApplicationContext())
+                .load("http://tts-api.com/tts.mp3?q=hello+world.")
+                .write(new File("/sdcard/test.mp3"))
+                .setCallback(new FutureCallback<File>() {
+                    @Override
+                    public void onCompleted(Exception e, File file) {
+                        Toast.makeText(getApplicationContext(), "download completed", Toast.LENGTH_SHORT).show();
+
+                        if (e != null){
+                            e.printStackTrace();
+                        }
+                        if (file == null){
+                            System.out.println("file is null");
+                        }
+
+                        MediaPlayer mediaPlayer = new MediaPlayer();
+                        try {
+                            mediaPlayer.setDataSource(file.getPath());
+                            mediaPlayer.prepare();
+                            mediaPlayer.start();
+                            System.out.println("should be playing");
+                        } catch (IOException e1) {
+                            e1.printStackTrace();
+                        }
+                    }
+                });
     }
 
     @Override
