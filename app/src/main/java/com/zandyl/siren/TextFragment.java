@@ -57,11 +57,7 @@ public class TextFragment extends Fragment {
         //Toast.makeText(getActivity().getApplicationContext(), "download started", Toast.LENGTH_SHORT).show();
         input = minputText.getText().toString();
 
-        Intent intent = new Intent(getActivity(), DisplayActivity.class);
-        intent.putExtra(INPUT_KEY, input);
-        startActivity(intent);
-
-//        String formattedInput = input.replace(' ', '+');
+        //        String formattedInput = input.replace(' ', '+');
 //        Toast.makeText(getActivity().getApplicationContext(),"download started", Toast.LENGTH_SHORT).show();
 
         //Toast.makeText(getActivity().getApplicationContext(), formattedInput, Toast.LENGTH_SHORT).show();
@@ -92,6 +88,12 @@ public class TextFragment extends Fragment {
 //                        }
 //                    }
 //                });
+
+        Intent intent = new Intent(getActivity(), DisplayActivity.class);
+        intent.putExtra(INPUT_KEY, input);
+        startActivity(intent);
+
+
     }
 
 
