@@ -1,10 +1,8 @@
 package com.zandyl.siren;
 
 import android.app.Activity;
-
-import android.app.Activity;
+import android.app.FragmentTransaction;
 import android.media.MediaPlayer;
-import android.support.v7.app.ActionBarActivity;
 import android.os.Bundle;
 import android.view.Menu;
 import android.view.MenuItem;
@@ -12,7 +10,6 @@ import android.widget.Toast;
 
 import com.koushikdutta.async.future.FutureCallback;
 import com.koushikdutta.ion.Ion;
-import com.koushikdutta.ion.ProgressCallback;
 
 import java.io.File;
 import java.io.IOException;
@@ -24,6 +21,13 @@ public class MainActivity extends Activity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
+
+        if (savedInstanceState == null) {
+
+            FragmentTransaction ft = getFragmentManager().beginTransaction();
+            ft.replace(R.id.content_frame, new TextFragment());
+            ft.commit();
+        }
 
         Toast.makeText(getApplicationContext(),"download started", Toast.LENGTH_SHORT).show();
         Ion.with(getApplicationContext())
