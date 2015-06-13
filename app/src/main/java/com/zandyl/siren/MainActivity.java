@@ -7,6 +7,7 @@ import android.view.Menu;
 import android.view.MenuItem;
 import android.widget.Toast;
 
+import com.ibm.mobile.services.core.IBMBluemix;
 import com.koushikdutta.async.future.FutureCallback;
 import com.koushikdutta.ion.Ion;
 import com.koushikdutta.ion.ProgressCallback;
@@ -21,6 +22,9 @@ public class MainActivity extends ActionBarActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
+
+        //bluemix initialization
+        IBMBluemix.initialize(MainActivity.this, "com.zandyl.siren", "303dfdef881587b4d0e3f4db9166fa83ba0f0002", "http://siren.mybluemix.net");
 
         Toast.makeText(getApplicationContext(),"download started", Toast.LENGTH_SHORT).show();
         Ion.with(getApplicationContext())
@@ -49,6 +53,9 @@ public class MainActivity extends ActionBarActivity {
                         }
                     }
                 });
+
+
+
     }
 
     @Override
