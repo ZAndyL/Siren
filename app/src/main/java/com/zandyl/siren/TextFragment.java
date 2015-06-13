@@ -72,7 +72,7 @@ public class TextFragment extends Fragment {
                         }
                         Toast.makeText(getActivity(), "File upload complete", Toast.LENGTH_LONG).show();
                         if (result != null){
-                            System.out.println("hi" + result);
+                            
                         }
                     }
                 });
