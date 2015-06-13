@@ -20,6 +20,19 @@
         android:id="@+id/hearButton"
         android:layout_gravity="right" />
 
+    <Button
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Record"
+        android:id="@+id/recordButton"
+        android:layout_toRightOf="@id/hearButton"/>
+    <Button
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Play"
+        android:id="@+id/playButton"
+        android:layout_toRightOf="@id/recordButton"/>
+
     <EditText android:id="@+id/inputText"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
