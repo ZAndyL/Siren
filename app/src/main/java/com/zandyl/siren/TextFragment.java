@@ -93,7 +93,6 @@ public class TextFragment extends Fragment {
         intent.putExtra(INPUT_KEY, input);
         startActivity(intent);
 
-
     }
 
 
