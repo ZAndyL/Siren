@@ -57,9 +57,12 @@ public class MainActivity extends Activity {
                             fragment = new TextFragment();
                             break;
                         case 2:
-                            fragment = new CameraFragment();
+                            fragment = new SpeechFragment();
                             break;
                         case 3:
+                            fragment = new CameraFragment();
+                            break;
+                        case 4:
                             fragment = new MessagesFragment();
                             break;
                         default:
