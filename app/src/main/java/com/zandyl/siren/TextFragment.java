@@ -8,6 +8,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.Toast;
+import android.widget.EditText;
 
 import com.koushikdutta.async.future.FutureCallback;
 import com.koushikdutta.ion.Ion;
@@ -20,6 +21,9 @@ import java.io.IOException;
  */
 public class TextFragment extends Fragment {
 
+    EditText minputText;
+    String input;
+
     public TextFragment(){}
 
     @Override
@@ -29,6 +33,9 @@ public class TextFragment extends Fragment {
 
         Button talkButton = (Button)settingView.findViewById(R.id.Talk);
         talkButton.setOnClickListener(talkButtonListener);
+
+        minputText = (EditText)settingView.findViewById(R.id.inputText);
+
         return settingView;
     }
 
@@ -39,10 +46,10 @@ public class TextFragment extends Fragment {
     };
 
     public void talkButton() {
-        Toast.makeText(getActivity().getApplicationContext(), "download started", Toast.LENGTH_SHORT).show();
-
         //bluemix initialization
         //IBMBluemix.initialize(MainActivity.this, "com.zandyl.siren", "303dfdef881587b4d0e3f4db9166fa83ba0f0002", "http://siren.mybluemix.net");
+
+        System.out.println("Hello World");
 
         Toast.makeText(getActivity().getApplicationContext(),"download started", Toast.LENGTH_SHORT).show();
         Ion.with(getActivity().getApplicationContext())
