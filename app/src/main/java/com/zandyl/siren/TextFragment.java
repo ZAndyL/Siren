@@ -48,12 +48,14 @@ public class TextFragment extends Fragment {
     public void talkButton() {
         //bluemix initialization
         //IBMBluemix.initialize(MainActivity.this, "com.zandyl.siren", "303dfdef881587b4d0e3f4db9166fa83ba0f0002", "http://siren.mybluemix.net");
-
-        System.out.println("Hello World");
-
+        input = minputText.getText().toString();
+        String formattedInput = input.replace(' ', '+');
         Toast.makeText(getActivity().getApplicationContext(),"download started", Toast.LENGTH_SHORT).show();
+
+        //Toast.makeText(getActivity().getApplicationContext(), formattedInput, Toast.LENGTH_SHORT).show();
+
         Ion.with(getActivity().getApplicationContext())
-                .load("http://tts-api.com/tts.mp3?q=hello+world.")
+                .load("http://tts-api.com/tts.mp3?q=%s", formattedInput)
                 .write(new File("/sdcard/test.mp3"))
                 .setCallback(new FutureCallback<File>() {
                     @Override
