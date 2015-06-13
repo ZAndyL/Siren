@@ -60,38 +60,6 @@ public class TextFragment extends Fragment {
         Intent intent = new Intent(getActivity(), DisplayActivity.class);
         intent.putExtra(INPUT_KEY, input);
         startActivity(intent);
-
-//        String formattedInput = input.replace(' ', '+');
-//        Toast.makeText(getActivity().getApplicationContext(),"download started", Toast.LENGTH_SHORT).show();
-
-        //Toast.makeText(getActivity().getApplicationContext(), formattedInput, Toast.LENGTH_SHORT).show();
-
-//        Ion.with(getActivity().getApplicationContext())
-//                .load("http://tts-api.com/tts.mp3?q=" + formattedInput)
-//                .write(new File("/sdcard/test.mp3"))
-//                .setCallback(new FutureCallback<File>() {
-//                    @Override
-//                    public void onCompleted(Exception e, File file) {
-//                        Toast.makeText(getActivity().getApplicationContext(), "download completed", Toast.LENGTH_SHORT).show();
-//
-//                        if (e != null) {
-//                            e.printStackTrace();
-//                        }
-//                        if (file == null) {
-//                            System.out.println("file is null");
-//                        }
-//
-//                        MediaPlayer mediaPlayer = new MediaPlayer();
-//                        try {
-//                            mediaPlayer.setDataSource(file.getPath());
-//                            mediaPlayer.prepare();
-//                            mediaPlayer.start();
-//                            System.out.println("should be playing");
-//                        } catch (IOException e1) {
-//                            e1.printStackTrace();
-//                        }
-//                    }
-//                });
     }
 
 
