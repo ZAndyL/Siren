@@ -133,7 +133,7 @@ public class DisplayFragment extends Fragment {
     }
 
     public void hearButton() {
-        final File fileToUpload = new File("/sdcard/test.mp3");
+        final File fileToUpload = new File(GlobalConstants.mp3Loc);
         Ion.with(getActivity())
                 .load("https://api.idolondemand.com/1/api/async/recognizespeech/v1")
                 .setMultipartParameter("apikey", "af5e6d04-603a-4478-95aa-ac47cbb199b6")
@@ -166,7 +166,7 @@ public class DisplayFragment extends Fragment {
                                             if (result!= null){
                                                 System.out.println(result);
                                                 String text = result.getAsJsonArray("actions").get(0).getAsJsonObject().getAsJsonObject("result").getAsJsonArray("document").get(0).getAsJsonObject().get("content").getAsString();
-                                                System.out.println("poop" + text);
+                                                System.out.println(text);
                                                 Toast.makeText(getActivity(), "Speech to text output: "+text,Toast.LENGTH_SHORT).show();
                                             }
                                         }
