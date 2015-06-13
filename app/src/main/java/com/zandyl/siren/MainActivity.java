@@ -11,9 +11,10 @@ import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
+import android.widget.EditText;
 import android.widget.Toast;
 
-import com.ibm.mobile.services.core.IBMBluemix;
+//import com.ibm.mobile.services.core.IBMBluemix;
 import com.koushikdutta.async.future.FutureCallback;
 import com.koushikdutta.ion.Ion;
 import com.koushikdutta.ion.ProgressCallback;
@@ -24,14 +25,17 @@ import java.io.IOException;
 
 public class MainActivity extends Activity {
 
+    EditText inputText;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
-<<<<<<< HEAD
         Button talkButton = (Button)findViewById(R.id.Talk);
         talkButton.setOnClickListener(talkButtonListener);
+
+        inputText = (EditText)findViewById(R.id.inputText);
     }
 
     @Override
@@ -65,36 +69,39 @@ public class MainActivity extends Activity {
     public void talkButton() {
         Toast.makeText(getApplicationContext(), "download started", Toast.LENGTH_SHORT).show();
 
+        String input = inputText.getText().toString();
+        System.out.println(input);
+
         //bluemix initialization
-        IBMBluemix.initialize(MainActivity.this, "com.zandyl.siren", "303dfdef881587b4d0e3f4db9166fa83ba0f0002", "http://siren.mybluemix.net");
+        //IBMBluemix.initialize(MainActivity.this, "com.zandyl.siren", "303dfdef881587b4d0e3f4db9166fa83ba0f0002", "http://siren.mybluemix.net");
 
         Toast.makeText(getApplicationContext(),"download started", Toast.LENGTH_SHORT).show();
-        Ion.with(getApplicationContext())
-                .load("http://tts-api.com/tts.mp3?q=hello+world.")
-                .write(new File("/sdcard/test.mp3"))
-                .setCallback(new FutureCallback<File>() {
-                    @Override
-                    public void onCompleted(Exception e, File file) {
-                        Toast.makeText(getApplicationContext(), "download completed", Toast.LENGTH_SHORT).show();
-
-                        if (e != null) {
-                            e.printStackTrace();
-                        }
-                        if (file == null) {
-                            System.out.println("file is null");
-                        }
-
-                        MediaPlayer mediaPlayer = new MediaPlayer();
-                        try {
-                            mediaPlayer.setDataSource(file.getPath());
-                            mediaPlayer.prepare();
-                            mediaPlayer.start();
-                            System.out.println("should be playing");
-                        } catch (IOException e1) {
-                            e1.printStackTrace();
-                        }
-                    }
-                });
+//        Ion.with(getApplicationContext())
+//                .load("http://tts-api.com/tts.mp3?q=hello+world.")
+//                .write(new File("/sdcard/test.mp3"))
+//                .setCallback(new FutureCallback<File>() {
+//                    @Override
+//                    public void onCompleted(Exception e, File file) {
+//                        Toast.makeText(getApplicationContext(), "download completed", Toast.LENGTH_SHORT).show();
+//
+//                        if (e != null) {
+//                            e.printStackTrace();
+//                        }
+//                        if (file == null) {
+//                            System.out.println("file is null");
+//                        }
+//
+//                        MediaPlayer mediaPlayer = new MediaPlayer();
+//                        try {
+//                            mediaPlayer.setDataSource(file.getPath());
+//                            mediaPlayer.prepare();
+//                            mediaPlayer.start();
+//                            System.out.println("should be playing");
+//                        } catch (IOException e1) {
+//                            e1.printStackTrace();
+//                        }
+//                    }
+//                });
 
 
 
