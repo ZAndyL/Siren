@@ -9,8 +9,10 @@ import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.Toast;
 
+import com.google.gson.JsonObject;
 import com.koushikdutta.async.future.FutureCallback;
 import com.koushikdutta.ion.Ion;
+import com.koushikdutta.ion.ProgressCallback;
 
 import java.io.File;
 import java.io.IOException;
@@ -28,22 +30,51 @@ public class TextFragment extends Fragment {
         View settingView = inflater.inflate(R.layout.fragment_text, container, false);
 
         Button talkButton = (Button)settingView.findViewById(R.id.Talk);
-        talkButton.setOnClickListener(talkButtonListener);
+        talkButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                talkButton();
+            }
+        });
+
+        Button hearButton = (Button)settingView.findViewById(R.id.hearButton);
+        hearButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                hearButton();
+            }
+        });
         return settingView;
     }
 
-    private View.OnClickListener talkButtonListener = new View.OnClickListener() {
-        public void onClick(View v) {
-            talkButton();
-        }
-    };
+    public void hearButton() {
+        final File fileToUpload = new File("/sdcard/test.mp3");
+        Ion.with(getActivity())
+                .load("https://api.idolondemand.com/1/api/async/recognizespeech/v1")
+                .setMultipartParameter("apikey", "af5e6d04-603a-4478-95aa-ac47cbb199b6")
+                .setMultipartFile("file", null, fileToUpload)
+                .asJsonObject()
+                        // run a callback on completion
+                .setCallback(new FutureCallback<JsonObject>() {
+                    @Override
+                    public void onCompleted(Exception e, JsonObject result) {
+                        // When the loop is finished, updates the notification
+                        Toast.makeText(getActivity(), "uploaded", Toast.LENGTH_SHORT).show();
+                        if (e != null) {
+                            Toast.makeText(getActivity(), "Error uploading file", Toast.LENGTH_LONG).show();
+                            e.printStackTrace();
+                            return;
+                        }
+                        Toast.makeText(getActivity(), "File upload complete", Toast.LENGTH_LONG).show();
+                        if (result != null){
+                            System.out.println("hi" + result);
+                        }
+                    }
+                });
+    }
 
     public void talkButton() {
         Toast.makeText(getActivity().getApplicationContext(), "download started", Toast.LENGTH_SHORT).show();
-
-        //bluemix initialization
-        //IBMBluemix.initialize(MainActivity.this, "com.zandyl.siren", "303dfdef881587b4d0e3f4db9166fa83ba0f0002", "http://siren.mybluemix.net");
-
         Toast.makeText(getActivity().getApplicationContext(),"download started", Toast.LENGTH_SHORT).show();
         Ion.with(getActivity().getApplicationContext())
                 .load("http://tts-api.com/tts.mp3?q=hello+world.")
