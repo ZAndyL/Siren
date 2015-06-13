@@ -71,7 +71,25 @@ public class TextFragment extends Fragment {
                         }
                         Toast.makeText(getActivity(), "File upload complete", Toast.LENGTH_LONG).show();
                         if (result != null){
-                            
+                            String jobID = result.get("jobID").getAsString();
+
+                            Ion.with(getActivity())
+                                    .load( "https://api.idolondemand.com/1/job/result/" + jobID)
+                                    .setBodyParameter("apikey", "af5e6d04-603a-4478-95aa-ac47cbb199b6")
+                                    .asJsonObject()
+                                    .setCallback(new FutureCallback<JsonObject>() {
+                                        @Override
+                                        public void onCompleted(Exception e, JsonObject result) {
+                                            if(e != null){
+                                                e.printStackTrace();
+                                            }
+                                            if (result!= null){
+                                                System.out.println(result);
+                                                String text = result.getAsJsonArray("actions").get(0).getAsJsonObject().getAsJsonObject("result").getAsJsonArray("document").get(0).getAsJsonObject().get("content").getAsString();
+                                                System.out.println("poop" + text);
+                                            }
+                                        }
+                                    });
                         }
                     }
                 });
