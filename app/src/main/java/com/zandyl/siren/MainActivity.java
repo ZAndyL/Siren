@@ -1,25 +1,21 @@
 package com.zandyl.siren;
 
 import android.app.Activity;
+import android.app.Fragment;
 import android.app.FragmentTransaction;
 import android.content.res.Resources;
 import android.os.Bundle;
+import android.support.v4.widget.DrawerLayout;
+import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
+import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
-import android.widget.ListView;
-import android.widget.Button;
 import android.widget.EditText;
-import android.widget.Toast;
+import android.widget.ListView;
 
 //import com.ibm.mobile.services.core.IBMBluemix;
-import com.koushikdutta.async.future.FutureCallback;
-import com.koushikdutta.ion.Ion;
-import com.koushikdutta.ion.ProgressCallback;
-
-import java.io.File;
-import java.io.IOException;
 
 //import com.ibm.mobile.services.core.IBMBluemix;
 
@@ -27,6 +23,8 @@ import java.io.IOException;
 public class MainActivity extends Activity {
 
     EditText inputText;
+    ListView mDrawer;
+    DrawerLayout mDrawerLayout;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -43,12 +41,47 @@ public class MainActivity extends Activity {
         ListView list = (ListView)findViewById(R.id.left_drawer);
         View header = (View)getLayoutInflater().inflate(R.layout.drawer_header,null);
 
-        list.addHeaderView(header);
 
+        list.addHeaderView(header);
         Resources resources = getResources();
         list.setAdapter(new ArrayAdapter<String>(this,
             android.R.layout.simple_list_item_single_choice, resources.getStringArray(R.array.drawer_items)));
 
+        list.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+            @Override
+            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+                    Fragment fragment = null;
+
+                    switch(position) {
+                        case 1:
+                            fragment = new TextFragment();
+                            break;
+                        case 2:
+                            fragment = new CameraFragment();
+                            break;
+                        case 3:
+                            fragment = new MessagesFragment();
+                            break;
+                        default:
+                            break;
+                    }
+
+                    if (fragment != null){
+                        FragmentTransaction ft = getFragmentManager().beginTransaction();
+                        ft.replace(R.id.content_frame, fragment);
+                        ft.commit();
+                    }
+                    else {
+                        // error in creating fragment
+                        Log.e("MainActivity", "Error in creating fragment");
+                    }
+
+                    mDrawerLayout.closeDrawer(mDrawer);
+            }
+        });
+
+        mDrawer = list;
+        mDrawerLayout = (DrawerLayout) findViewById(R.id.drawer_layout);
     }
 
     @Override
@@ -72,5 +105,4 @@ public class MainActivity extends Activity {
 
         return super.onOptionsItemSelected(item);
     }
-
 }

@@ -30,9 +30,9 @@ public class TextFragment extends Fragment {
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
-        View settingView = inflater.inflate(R.layout.fragment_text, container, false);
+        View textView = inflater.inflate(R.layout.fragment_text, container, false);
 
-        Button talkButton = (Button)settingView.findViewById(R.id.Talk);
+        Button talkButton = (Button)textView.findViewById(R.id.Talk);
         talkButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -40,15 +40,15 @@ public class TextFragment extends Fragment {
             }
         });
 
-        Button hearButton = (Button)settingView.findViewById(R.id.hearButton);
+        Button hearButton = (Button)textView.findViewById(R.id.hearButton);
         hearButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 hearButton();
             }
         });
-        minputText = (EditText)settingView.findViewById(R.id.inputText);
-        return settingView;
+        minputText = (EditText)textView.findViewById(R.id.inputText);
+        return textView;
     }
 
     public void hearButton() {
