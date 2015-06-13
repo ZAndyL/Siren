@@ -93,7 +93,12 @@
     <orderEntry type="library" exported="" name="support-annotations-21.0.3" level="project" />
     <orderEntry type="library" exported="" name="support-v4-21.0.3" level="project" />
     <orderEntry type="library" exported="" name="ion-2.1.6" level="project" />
+<<<<<<< HEAD
+    <orderEntry type="library" exported="" name="library-2.4.0" level="project" />
+=======
     <orderEntry type="library" exported="" name="ibmbluemix" level="project" />
+>>>>>>> c5548862b38fd83f4291c1607f1688c1742ac4b8
     <orderEntry type="library" exported="" name="gson-2.3" level="project" />
+    <orderEntry type="library" exported="" name="library-3.0.0" level="project" />
   </component>
 </module>
