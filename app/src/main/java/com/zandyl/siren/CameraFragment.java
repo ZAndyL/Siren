@@ -14,6 +14,8 @@ import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.RelativeLayout;
 
+import java.io.FileOutputStream;
+
 /**
  * Created by stevedavis on 15-06-13.
  */
@@ -55,6 +57,14 @@ public class CameraFragment extends Fragment {
                 if(resultCode == Activity.RESULT_OK){
                     Bundle extras = imageReturnedIntent.getExtras();
                     Bitmap imageBitmap = (Bitmap) extras.get("data");
+                    try {
+                        FileOutputStream out = new FileOutputStream(GlobalConstants.imageLoc);
+                        imageBitmap.compress(Bitmap.CompressFormat.PNG, 90, out);
+                        out.flush();
+                        out.close();
+                    } catch (Exception e) {
+                        e.printStackTrace();
+                    }
                     imageView.setImageBitmap(imageBitmap);
                 }
                 break;
