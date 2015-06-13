@@ -8,6 +8,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.Toast;
+import android.widget.EditText;
 
 import com.google.gson.JsonObject;
 import com.koushikdutta.async.future.FutureCallback;
@@ -21,6 +22,9 @@ import java.io.IOException;
  * Created by stevedavis on 15-06-13.
  */
 public class TextFragment extends Fragment {
+
+    EditText minputText;
+    String input;
 
     public TextFragment(){}
 
@@ -44,6 +48,7 @@ public class TextFragment extends Fragment {
                 hearButton();
             }
         });
+        minputText = (EditText)settingView.findViewById(R.id.inputText);
         return settingView;
     }
 
@@ -75,9 +80,14 @@ public class TextFragment extends Fragment {
 
     public void talkButton() {
         Toast.makeText(getActivity().getApplicationContext(), "download started", Toast.LENGTH_SHORT).show();
+        input = minputText.getText().toString();
+        String formattedInput = input.replace(' ', '+');
         Toast.makeText(getActivity().getApplicationContext(),"download started", Toast.LENGTH_SHORT).show();
+
+        //Toast.makeText(getActivity().getApplicationContext(), formattedInput, Toast.LENGTH_SHORT).show();
+
         Ion.with(getActivity().getApplicationContext())
-                .load("http://tts-api.com/tts.mp3?q=hello+world.")
+                .load("http://tts-api.com/tts.mp3?q="+ formattedInput)
                 .write(new File("/sdcard/test.mp3"))
                 .setCallback(new FutureCallback<File>() {
                     @Override
