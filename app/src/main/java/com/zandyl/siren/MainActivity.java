@@ -1,5 +1,8 @@
 package com.zandyl.siren;
 
+import android.app.Activity;
+
+import android.app.Activity;
 import android.media.MediaPlayer;
 import android.support.v7.app.ActionBarActivity;
 import android.os.Bundle;
@@ -16,7 +19,7 @@ import java.io.File;
 import java.io.IOException;
 
 
-public class MainActivity extends ActionBarActivity {
+public class MainActivity extends Activity {
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -35,10 +38,10 @@ public class MainActivity extends ActionBarActivity {
                     public void onCompleted(Exception e, File file) {
                         Toast.makeText(getApplicationContext(), "download completed", Toast.LENGTH_SHORT).show();
 
-                        if (e != null){
+                        if (e != null) {
                             e.printStackTrace();
                         }
-                        if (file == null){
+                        if (file == null) {
                             System.out.println("file is null");
                         }
 
