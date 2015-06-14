@@ -8,6 +8,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.app.Fragment;
 import android.widget.Button;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import com.google.gson.JsonObject;
@@ -24,6 +25,7 @@ public class SpeechFragment extends Fragment {
 
     MediaRecorder mediaRecorder;
     Button recordButton;
+    TextView convertedText;
 
     public SpeechFragment() {}
 
@@ -56,6 +58,8 @@ public class SpeechFragment extends Fragment {
                 playButton();
             }
         });
+
+        convertedText = (TextView)speechView.findViewById(R.id.convertedText);
 
         return speechView;
     }
@@ -130,8 +134,10 @@ public class SpeechFragment extends Fragment {
                                             if (result != null) {
                                                 System.out.println(result);
                                                 String text = result.getAsJsonArray("actions").get(0).getAsJsonObject().getAsJsonObject("result").getAsJsonArray("document").get(0).getAsJsonObject().get("content").getAsString();
-                                                System.out.println("poop" + text);
-                                                Toast.makeText(getActivity(), "Speech to text output: " + text, Toast.LENGTH_SHORT).show();
+
+                                                convertedText.setText(text);
+                                                //System.out.println("poop" + text);
+                                                //Toast.makeText(getActivity(), "Speech to text output: " + text, Toast.LENGTH_SHORT).show();
                                             }
                                         }
                                     });

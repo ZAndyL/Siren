@@ -30,9 +30,11 @@ public class DisplayFragment extends Fragment {
         View settingView = inflater.inflate(R.layout.display_text, container, false);
 
         String input = getArguments().getString("input");
+
         inputLabel = (TextView)settingView.findViewById(R.id.inputText);
         inputLabel.setText(input);
         final String formattedInput = input.replace(' ', '+');
+
         textToSpeech(formattedInput);
 
         playAgain = (Button)settingView.findViewById(R.id.play_again);
@@ -57,6 +59,7 @@ public class DisplayFragment extends Fragment {
     }
 
     public void textToSpeech(String formattedInput) {
+
         Ion.with(getActivity().getApplicationContext())
                 .load("http://tts-api.com/tts.mp3?q="+ formattedInput)
                 .write(new File("/sdcard/test.mp3"))
@@ -116,8 +119,7 @@ public class DisplayFragment extends Fragment {
     }
 
     public void clickPlayAnother() {
-        //getActivity().finish();
-        Intent intent = new Intent(getActivity().getApplicationContext(), MainActivity.class);
+        Intent intent = new Intent(getActivity(), MainActivity.class);
         startActivity(intent);
     }
 
