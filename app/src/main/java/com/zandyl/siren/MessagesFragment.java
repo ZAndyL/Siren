@@ -66,8 +66,10 @@ public class MessagesFragment extends Fragment{
 
     public void textToSpeech(String itemValue) {
         Ion.with(getActivity().getApplicationContext())
-                .load("http://tts-api.com/tts.mp3?q="+ itemValue)
-                .write(new File("/sdcard/test.mp3"))
+                .load("https://montanaflynn-text-to-speech.p.mashape.com/speak")
+                .setHeader("X-Mashape-Key", "s18BGdQkJJmshz0FiUHRWGFJW7CLp1e5djojsnPLRnAvb2RAfi")
+                .setBodyParameter("text", itemValue)
+                .write(new File("/sdcard/test.matroska"))
                 .setCallback(new FutureCallback<File>() {
                     @Override
                     public void onCompleted(Exception e, File file) {
