@@ -26,6 +26,7 @@ import java.io.IOException;
 public class DisplayFragment extends Fragment {
 
     TextView inputLabel;
+    Button playAgain, playAnother, addToLibrary;
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
@@ -34,12 +35,31 @@ public class DisplayFragment extends Fragment {
         String input = getArguments().getString("input");
         inputLabel = (TextView)settingView.findViewById(R.id.inputText);
         inputLabel.setText(input);
+        final String formattedInput = input.replace(' ', '+');
+        textToSpeech(formattedInput);
 
-        String formattedInput = input.replace(' ', '+');
-        //Toast.makeText(getActivity().getApplicationContext(),"download started", Toast.LENGTH_SHORT).show();
+        playAgain = (Button)settingView.findViewById(R.id.play_again);
+        playAnother = (Button)settingView.findViewById(R.id.play_another);
+        addToLibrary = (Button)settingView.findViewById(R.id.add_to_library);
 
-        //Toast.makeText(getActivity().getApplicationContext(), formattedInput, Toast.LENGTH_SHORT).show();
+        playAgain.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                clickPlayAgain(formattedInput);
+            }
+        });
 
+        playAnother.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                clickPlayAnother();
+            }
+        });
+
+        return settingView;
+    }
+
+    public void textToSpeech(String formattedInput) {
         Ion.with(getActivity().getApplicationContext())
                 .load("http://tts-api.com/tts.mp3?q="+ formattedInput)
                 .write(new File("/sdcard/test.mp3"))
@@ -66,7 +86,40 @@ public class DisplayFragment extends Fragment {
                         }
                     }
                 });
-
-        return settingView;
     }
+
+    public void clickPlayAgain(String formattedInput) {
+        Ion.with(getActivity().getApplicationContext())
+                .load("http://tts-api.com/tts.mp3?q="+ formattedInput)
+                .write(new File("/sdcard/test.mp3"))
+                .setCallback(new FutureCallback<File>() {
+                    @Override
+                    public void onCompleted(Exception e, File file) {
+                        //Toast.makeText(getActivity().getApplicationContext(), "download completed", Toast.LENGTH_SHORT).show();
+
+                        if (e != null) {
+                            e.printStackTrace();
+                        }
+
+                        if (file == null) {
+                            System.out.println("file is null");
+                        }
+
+                        MediaPlayer mediaPlayer = new MediaPlayer();
+                        try {
+                            mediaPlayer.setDataSource(file.getPath());
+                            mediaPlayer.prepare();
+                            mediaPlayer.start();
+                            System.out.println("should be playing");
+                        } catch (IOException e1) {
+                            e1.printStackTrace();
+                        }
+                    }
+                });
+    }
+
+    public void clickPlayAnother() {
+        getActivity().finish();
+    }
+
 }
