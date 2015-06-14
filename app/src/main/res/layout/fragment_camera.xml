@@ -7,8 +7,15 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_gravity="right"
-        android:text="Send image"
+        android:text="Take picture"
         android:id="@+id/imageButton"/>
+
+    <Button
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Send Picture"
+        android:id="@+id/sendButton"
+        android:layout_toRightOf="@id/imageButton"/>
 
     <ImageView
         android:layout_width="wrap_content"

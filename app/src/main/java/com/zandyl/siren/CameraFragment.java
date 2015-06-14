@@ -13,7 +13,13 @@ import android.app.Fragment;
 import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.RelativeLayout;
+import android.widget.Toast;
 
+import com.google.gson.JsonObject;
+import com.koushikdutta.async.future.FutureCallback;
+import com.koushikdutta.ion.Ion;
+
+import java.io.File;
 import java.io.FileOutputStream;
 
 /**
@@ -41,7 +47,60 @@ public class CameraFragment extends Fragment {
             }
         });
 
+        Button sendButton = (Button)cameraView.findViewById(R.id.sendButton);
+        sendButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                sendButton();
+            }
+        });
+
         return cameraView;
+    }
+
+    public void sendButton(){
+
+        final File fileToUpload = new File(GlobalConstants.imageLoc);
+
+        Ion.with(getActivity())
+                .load("https://api.idolondemand.com/1/api/async/ocrdocument/v1")
+                .setMultipartParameter("apikey", GlobalConstants.idolApiKey)
+                .setMultipartFile("file", null, fileToUpload)
+                .asJsonObject()
+                        // run a callback on completion
+                .setCallback(new FutureCallback<JsonObject>() {
+                    @Override
+                    public void onCompleted(Exception e, JsonObject result) {
+                        // When the loop is finished, updates the notification
+                        if (e != null) {
+                            Toast.makeText(getActivity(), "Error uploading file", Toast.LENGTH_LONG).show();
+                            e.printStackTrace();
+                            return;
+                        }
+                        Toast.makeText(getActivity(), "File upload complete", Toast.LENGTH_LONG).show();
+                        if (result != null){
+                            String jobID = result.get("jobID").getAsString();
+                            Ion.with(getActivity())
+                                    .load( "https://api.idolondemand.com/1/job/result/" + jobID)
+                                    .setBodyParameter("apikey", GlobalConstants.idolApiKey)
+                                    .asJsonObject()
+                                    .setCallback(new FutureCallback<JsonObject>() {
+                                        @Override
+                                        public void onCompleted(Exception e, JsonObject result) {
+                                            if(e != null){
+                                                e.printStackTrace();
+                                            }
+                                            if (result!= null){
+                                                System.out.println(result);
+                                                String text = result.getAsJsonArray("actions").get(0).getAsJsonObject().getAsJsonObject("result").getAsJsonArray("text_block").get(0).getAsJsonObject().get("text").getAsString();
+                                                System.out.println(text);
+                                                Toast.makeText(getActivity(), "Speech to text output: "+text,Toast.LENGTH_SHORT).show();
+                                            }
+                                        }
+                                    });
+                        }
+                    }
+                });
     }
 
     public void imageButton(){
