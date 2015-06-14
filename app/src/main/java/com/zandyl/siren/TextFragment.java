@@ -1,25 +1,18 @@
 package com.zandyl.siren;
 
 import android.app.Fragment;
-import android.app.FragmentTransaction;
+import android.content.Context;
 import android.content.Intent;
-import android.media.MediaPlayer;
-import android.media.MediaRecorder;
+import android.graphics.Rect;
 import android.os.Bundle;
 import android.view.LayoutInflater;
+import android.view.MotionEvent;
 import android.view.View;
 import android.view.ViewGroup;
+import android.view.inputmethod.InputMethodManager;
 import android.widget.Button;
 import android.widget.EditText;
-import android.widget.Toast;
-import android.content.Intent;
-
-import com.google.gson.JsonObject;
-import com.koushikdutta.async.future.FutureCallback;
-import com.koushikdutta.ion.Ion;
-
-import java.io.File;
-import java.io.IOException;
+import android.widget.RelativeLayout;
 
 /**
  * Created by stevedavis on 15-06-13.
@@ -49,6 +42,26 @@ public class TextFragment extends Fragment {
 
         minputText = (EditText)textView.findViewById(R.id.inputText);
 
+        final EditText editText = (EditText)textView.findViewById(R.id.inputText);
+
+        final RelativeLayout rLayout = (RelativeLayout)textView.findViewById(R.id.relativeLayout);
+        rLayout.setOnTouchListener(new View.OnTouchListener() {
+            @Override
+            public boolean onTouch(View v, MotionEvent event) {
+                if (event.getAction() == MotionEvent.ACTION_DOWN) {
+                    if (editText.isFocused()) {
+                        Rect outRect = new Rect();
+                        editText.getGlobalVisibleRect(outRect);
+                        if (!outRect.contains((int)event.getRawX(), (int)event.getRawY())) {
+                            editText.clearFocus();
+                            InputMethodManager imm = (InputMethodManager) v.getContext().getSystemService(Context.INPUT_METHOD_SERVICE);
+                            imm.hideSoftInputFromWindow(v.getWindowToken(), 0);
+                        }
+                    }
+                }
+                return false;
+            }
+        });
         return textView;
     }
 
