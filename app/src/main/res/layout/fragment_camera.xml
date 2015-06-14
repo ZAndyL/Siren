@@ -4,23 +4,6 @@
     android:layout_height="match_parent"
     android:background="@drawable/fragment_background">
 
-
-    <Button
-        android:id="@+id/imageButton"
-
-        android:text="Take Picture"
-        android:textColor="#FFFFFF"
-        android:textSize="15sp"
-        android:background="@drawable/buttonstyle"
-        android:fontFamily="sans-serif-condensed"
-
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-
-        android:layout_above="@+id/sendButton"
-        style="?android:attr/borderlessButtonStyle"
-        />
-
     <Button
         android:id="@+id/sendButton"
 
@@ -37,6 +20,34 @@
         android:layout_alignParentBottom="true"
         style="?android:attr/borderlessButtonStyle"
         />
+    <Button
+        android:id="@+id/imageButton"
+        android:text="Take Picture"
+        android:textColor="#FFFFFF"
+        android:textSize="15sp"
+        android:background="@drawable/buttonstyle"
+        android:fontFamily="sans-serif-condensed"
+
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+
+        android:layout_above="@+id/sendButton"
+        style="?android:attr/borderlessButtonStyle"
+        />
+    <Button
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="Pick Picture"
+        android:textColor="#FFFFFF"
+        android:textSize="15sp"
+        android:background="@drawable/buttonstyle"
+        android:fontFamily="sans-serif-condensed"
+        android:id="@+id/pickImageButton"
+        android:layout_above="@id/imageButton"/>
+
+
+
+
 
     <ImageView
         android:layout_width="wrap_content"
