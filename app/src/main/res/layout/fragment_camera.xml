@@ -1,28 +1,46 @@
 <?xml version="1.0" encoding="utf-8"?>
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
-    android:layout_height="match_parent">
+    android:layout_height="match_parent"
+    android:background="@drawable/thisisatest">
+
 
     <Button
-        android:layout_width="wrap_content"
+        android:id="@+id/imageButton"
+
+        android:text="Take Picture"
+        android:textColor="#FFFFFF"
+        android:textSize="15sp"
+        android:background="@drawable/buttonstyle"
+        android:fontFamily="sans-serif-condensed"
+
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_gravity="right"
-        android:text="Take picture"
-        android:id="@+id/imageButton"/>
+
+        android:layout_above="@+id/sendButton"
+        style="?android:attr/borderlessButtonStyle"
+        />
 
     <Button
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="Send Picture"
         android:id="@+id/sendButton"
-        android:layout_toRightOf="@id/imageButton"/>
+
+        android:text="Send Picture"
+        android:textColor="#FFFFFF"
+        android:textSize="15sp"
+        android:background="@drawable/buttonstyle"
+        android:fontFamily="sans-serif-condensed"
+
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+
+        android:layout_alignParentBottom="true"
+        style="?android:attr/borderlessButtonStyle"
+        />
 
     <ImageView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:id="@+id/imageView"
-        android:layout_below="@id/imageButton"/>
-
-
+        android:layout_centerInParent="true"/>
 
 </RelativeLayout>

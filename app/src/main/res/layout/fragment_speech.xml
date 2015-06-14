@@ -1,32 +1,59 @@
 <?xml version="1.0" encoding="utf-8"?>
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:orientation="vertical" android:layout_width="match_parent"
-    android:layout_height="match_parent">
+    android:layout_height="match_parent"
+    android:background="@drawable/thisisatest">
 
     <Button
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="Hear"
         android:id="@+id/hearButton"
-        android:layout_gravity="right" />
+
+        android:text="Listen"
+        android:textColor="#FFFFFF"
+        android:textSize="15sp"
+        android:background="@drawable/buttonstyle"
+        android:fontFamily="sans-serif-condensed"
+
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+
+        android:layout_alignParentBottom="true"
+        style="?android:attr/borderlessButtonStyle"
+        />
 
     <Button
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="Record"
         android:id="@+id/recordButton"
-        android:layout_toRightOf="@id/hearButton"/>
+
+        android:text="Record"
+        android:textColor="#FFFFFF"
+        android:textSize="15sp"
+        android:background="@drawable/buttonstyle"
+        android:fontFamily="sans-serif-condensed"
+
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+
+        android:layout_above="@+id/hearButton"
+        style="?android:attr/borderlessButtonStyle"
+        />
 
     <Button
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="Play"
         android:id="@+id/playButton"
-        android:layout_toRightOf="@id/recordButton"/>
+
+        android:text="Play"
+        android:textColor="#FFFFFF"
+        android:textSize="15sp"
+        android:background="@drawable/buttonstyle"
+        android:fontFamily="sans-serif-condensed"
+
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+
+        android:layout_above="@+id/recordButton"
+        style="?android:attr/borderlessButtonStyle"
+        />
 
     <TextView android:id="@+id/inputText"
-        android:layout_centerHorizontal="true"
-        android:layout_centerVertical="true"
+        android:layout_centerInParent="true"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content" />
 
