@@ -12,4 +12,5 @@
         <item>Process Image</item>
         <item>Saved Messages</item>
     </string-array>
+    <string name="fragment_text_text">What should I say?</string>
 </resources>
