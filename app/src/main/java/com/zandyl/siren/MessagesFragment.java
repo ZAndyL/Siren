@@ -46,9 +46,14 @@ public class MessagesFragment extends Fragment{
         }
 
         String[] speeches = speechesText.split("/");
+        ArrayList<String> speechesList = new ArrayList<String>();
+
+        for (int i = 1; i < speeches.length; i++) {
+            speechesList.add(speeches[i]);
+        }
         //Toast.makeText(getActivity().getApplicationContext(), speeches[1], Toast.LENGTH_SHORT).show();
 
-        ArrayAdapter<String> adapter = new ArrayAdapter<String>(getActivity(), android.R.layout.simple_list_item_1, speeches);
+        ArrayAdapter<String> adapter = new ArrayAdapter<String>(getActivity(), android.R.layout.simple_list_item_1, speechesList);
         listView.setAdapter(adapter);
 
         listView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
