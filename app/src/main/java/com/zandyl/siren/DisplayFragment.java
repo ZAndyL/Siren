@@ -36,6 +36,7 @@ public class DisplayFragment extends Fragment {
         inputLabel = (TextView)settingView.findViewById(R.id.inputText);
         inputLabel.setText(input);
         final String formattedInput = input.replace(' ', '+');
+
         textToSpeech(formattedInput);
 
         playAgain = (Button)settingView.findViewById(R.id.play_again);
