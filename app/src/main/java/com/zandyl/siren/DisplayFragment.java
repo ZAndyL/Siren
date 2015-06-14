@@ -13,6 +13,7 @@ import android.widget.Button;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.google.gson.JsonObject;
 import com.koushikdutta.async.future.FutureCallback;
 import com.koushikdutta.ion.Ion;
 
@@ -35,9 +36,7 @@ public class DisplayFragment extends Fragment {
 
         inputLabel = (TextView)settingView.findViewById(R.id.inputText);
         inputLabel.setText(input);
-        final String formattedInput = input.replace(' ', '+');
-
-        textToSpeech(formattedInput);
+        textToSpeech(input);
 
         playAgain = (Button)settingView.findViewById(R.id.play_again);
         playAnother = (Button)settingView.findViewById(R.id.play_another);
@@ -46,7 +45,7 @@ public class DisplayFragment extends Fragment {
         playAgain.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                clickPlayAgain(formattedInput);
+                clickPlayAgain(input);
             }
         });
 
@@ -70,8 +69,10 @@ public class DisplayFragment extends Fragment {
     public void textToSpeech(String formattedInput) {
 
         Ion.with(getActivity().getApplicationContext())
-                .load("http://tts-api.com/tts.mp3?q="+ formattedInput)
-                .write(new File("/sdcard/test.mp3"))
+                .load("https://montanaflynn-text-to-speech.p.mashape.com/speak")
+                .setHeader("X-Mashape-Key", "s18BGdQkJJmshz0FiUHRWGFJW7CLp1e5djojsnPLRnAvb2RAfi")
+                .setBodyParameter("text", formattedInput)
+                .write(new File("/sdcard/test.matroska"))
                 .setCallback(new FutureCallback<File>() {
                     @Override
                     public void onCompleted(Exception e, File file) {
@@ -99,17 +100,18 @@ public class DisplayFragment extends Fragment {
 
     public void clickPlayAgain(String formattedInput) {
         Ion.with(getActivity().getApplicationContext())
-                .load("http://tts-api.com/tts.mp3?q="+ formattedInput)
-                .write(new File("/sdcard/test.mp3"))
+                .load("https://montanaflynn-text-to-speech.p.mashape.com/speak")
+                .setHeader("X-Mashape-Key", "s18BGdQkJJmshz0FiUHRWGFJW7CLp1e5djojsnPLRnAvb2RAfi")
+                .setBodyParameter("text", formattedInput)
+                .write(new File("/sdcard/test.matroska"))
                 .setCallback(new FutureCallback<File>() {
                     @Override
                     public void onCompleted(Exception e, File file) {
-                        //Toast.makeText(getActivity().getApplicationContext(), "download completed", Toast.LENGTH_SHORT).show();
+                        Toast.makeText(getActivity().getApplicationContext(), "download completed", Toast.LENGTH_SHORT).show();
 
                         if (e != null) {
                             e.printStackTrace();
                         }
-
                         if (file == null) {
                             System.out.println("file is null");
                         }
