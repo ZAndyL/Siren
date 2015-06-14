@@ -3,16 +3,10 @@
     android:orientation="vertical" android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="@drawable/fragment_background">
-    <TextView
+
+    <ListView android:id="@+id/saved_list"
         android:layout_width="match_parent"
-        android:layout_height="10dp"
-        android:text="@string/hello_world"/>
-    <TextView
-        android:layout_width="match_parent"
-        android:layout_height="10dp"
-        android:text="@string/hello_world"/>
-    <TextView
-        android:layout_width="match_parent"
-        android:layout_height="10dp"
-        android:text="@string/hello_world"/>
+        android:layout_height="wrap_content"></ListView>
+
+
 </LinearLayout>
