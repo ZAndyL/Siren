@@ -4,6 +4,7 @@ import android.app.AlertDialog;
 import android.app.Fragment;
 import android.content.Context;
 import android.content.DialogInterface;
+import android.content.Intent;
 import android.content.SharedPreferences;
 import android.media.MediaPlayer;
 import android.os.Bundle;
@@ -18,9 +19,15 @@ import android.widget.Toast;
 import com.koushikdutta.async.future.FutureCallback;
 import com.koushikdutta.ion.Ion;
 
+import org.json.JSONException;
+import org.json.JSONObject;
+
 import java.io.File;
 import java.io.IOException;
 import java.util.ArrayList;
+
+import io.branch.referral.Branch;
+import io.branch.referral.BranchError;
 
 /**
  * Created by stevedavis on 15-06-13.
@@ -85,10 +92,10 @@ public class MessagesFragment extends Fragment{
 
         AlertDialog.Builder alert = new AlertDialog.Builder(getActivity());
 
-        alert.setTitle("Delete Speech");
-        alert.setMessage("Do you want to delete this speech?");
+        alert.setTitle("More Options");
+        alert.setMessage("What do you want to do with this speech?");
 
-        alert.setPositiveButton("YES", new DialogInterface.OnClickListener() {
+        alert.setPositiveButton("Delete", new DialogInterface.OnClickListener() {
             @Override
             public void onClick(DialogInterface dialogInterface, int i) {
                 speechesList.remove(position);
@@ -109,6 +116,28 @@ public class MessagesFragment extends Fragment{
             @Override
             public void onClick(DialogInterface dialogInterface, int i) {
                 dialogInterface.dismiss();
+            }
+        });
+        alert.setNeutralButton("Send w/ Branch", new DialogInterface.OnClickListener(){
+            @Override
+            public void onClick(DialogInterface dialogInterface, int i) {
+
+                JSONObject stuff = new JSONObject();
+                try {
+                    stuff.put("message", position);
+                } catch (JSONException e) {
+                    e.printStackTrace();
+                }
+                Branch.getInstance(getActivity().getApplicationContext()).getContentUrl("email", stuff, new Branch.BranchLinkCreateListener() {
+                    @Override
+                    public void onLinkCreate(String url, BranchError error) {
+                        Intent intent = new Intent(Intent.ACTION_SEND);
+                        intent.putExtra(Intent.EXTRA_SUBJECT, "Check out my Speech");
+                        intent.putExtra(Intent.EXTRA_TEXT, "I just created this speech in the Siren.\n\nSee it here:\n" + url);
+                        intent.setType("text/plain");
+                        startActivity(Intent.createChooser(intent, "Choose Email Client"));
+                    }
+                });
             }
         });
         alert.show();
