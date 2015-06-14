@@ -12,8 +12,7 @@ import android.view.ViewGroup;
 import android.app.Fragment;
 import android.widget.Button;
 import android.widget.ImageView;
-import android.widget.RelativeLayout;
-import android.widget.Toast;
+import android.widget.TextView;
 
 import com.google.gson.JsonObject;
 import com.koushikdutta.async.future.FutureCallback;
@@ -28,6 +27,7 @@ import java.io.FileOutputStream;
 public class CameraFragment extends Fragment {
 
     ImageView imageView;
+    TextView ocrText;
     public CameraFragment() {}
 
     @Override
@@ -39,6 +39,7 @@ public class CameraFragment extends Fragment {
         Button imageButton = (Button)cameraView.findViewById(R.id.imageButton);
 
         imageView = (ImageView)cameraView.findViewById(R.id.imageView);
+        ocrText = (TextView)cameraView.findViewById(R.id.ocrText);
 
         imageButton.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -73,11 +74,9 @@ public class CameraFragment extends Fragment {
                     public void onCompleted(Exception e, JsonObject result) {
                         // When the loop is finished, updates the notification
                         if (e != null) {
-                            Toast.makeText(getActivity(), "Error uploading file", Toast.LENGTH_LONG).show();
                             e.printStackTrace();
                             return;
                         }
-                        Toast.makeText(getActivity(), "File upload complete", Toast.LENGTH_LONG).show();
                         if (result != null){
                             String jobID = result.get("jobID").getAsString();
                             Ion.with(getActivity())
@@ -93,8 +92,8 @@ public class CameraFragment extends Fragment {
                                             if (result!= null){
                                                 System.out.println(result);
                                                 String text = result.getAsJsonArray("actions").get(0).getAsJsonObject().getAsJsonObject("result").getAsJsonArray("text_block").get(0).getAsJsonObject().get("text").getAsString();
-                                                System.out.println(text);
-                                                Toast.makeText(getActivity(), "Speech to text output: "+text,Toast.LENGTH_SHORT).show();
+                                                text = text.replaceAll("[^A-Za-z0-9 ,.]", "");
+                                                ocrText.setText(text);
                                             }
                                         }
                                     });

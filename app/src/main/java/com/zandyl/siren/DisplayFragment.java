@@ -1,7 +1,9 @@
 package com.zandyl.siren;
 
 import android.app.Fragment;
+import android.content.Context;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.media.MediaPlayer;
 import android.os.Bundle;
 import android.view.LayoutInflater;
@@ -11,6 +13,7 @@ import android.widget.Button;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.google.gson.JsonObject;
 import com.koushikdutta.async.future.FutureCallback;
 import com.koushikdutta.ion.Ion;
 
@@ -29,13 +32,11 @@ public class DisplayFragment extends Fragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         View settingView = inflater.inflate(R.layout.display_text, container, false);
 
-        String input = getArguments().getString("input");
+        final String input = getArguments().getString("input");
 
         inputLabel = (TextView)settingView.findViewById(R.id.inputText);
         inputLabel.setText(input);
-        final String formattedInput = input.replace(' ', '+');
-
-        textToSpeech(formattedInput);
+        textToSpeech(input);
 
         playAgain = (Button)settingView.findViewById(R.id.play_again);
         playAnother = (Button)settingView.findViewById(R.id.play_another);
@@ -44,7 +45,7 @@ public class DisplayFragment extends Fragment {
         playAgain.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                clickPlayAgain(formattedInput);
+                clickPlayAgain(input);
             }
         });
 
@@ -55,67 +56,22 @@ public class DisplayFragment extends Fragment {
             }
         });
 
+        addToLibrary.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                clickToAddToLibrary(input);
+            }
+        });
+
         return settingView;
     }
 
-    public void textToSpeech(String formattedInput) {
-
-        Ion.with(getActivity().getApplicationContext())
-                .load("http://tts-api.com/tts.mp3?q="+ formattedInput)
-                .write(new File("/sdcard/test.mp3"))
-                .setCallback(new FutureCallback<File>() {
-                    @Override
-                    public void onCompleted(Exception e, File file) {
-                        Toast.makeText(getActivity().getApplicationContext(), "download completed", Toast.LENGTH_SHORT).show();
-
-                        if (e != null) {
-                            e.printStackTrace();
-                        }
-                        if (file == null) {
-                            System.out.println("file is null");
-                        }
-
-                        MediaPlayer mediaPlayer = new MediaPlayer();
-                        try {
-                            mediaPlayer.setDataSource(file.getPath());
-                            mediaPlayer.prepare();
-                            mediaPlayer.start();
-                            System.out.println("should be playing");
-                        } catch (IOException e1) {
-                            e1.printStackTrace();
-                        }
-                    }
-                });
+    public void textToSpeech(String input) {
+        GlobalConstants.textToString(input, getActivity());
     }
 
-    public void clickPlayAgain(String formattedInput) {
-        Ion.with(getActivity().getApplicationContext())
-                .load("http://tts-api.com/tts.mp3?q="+ formattedInput)
-                .write(new File("/sdcard/test.mp3"))
-                .setCallback(new FutureCallback<File>() {
-                    @Override
-                    public void onCompleted(Exception e, File file) {
-                        //Toast.makeText(getActivity().getApplicationContext(), "download completed", Toast.LENGTH_SHORT).show();
-
-                        if (e != null) {
-                            e.printStackTrace();
-                        }
-
-                        if (file == null) {
-                            System.out.println("file is null");
-                        }
-
-                        MediaPlayer mediaPlayer = new MediaPlayer();
-                        try {
-                            mediaPlayer.setDataSource(file.getPath());
-                            mediaPlayer.prepare();
-                            mediaPlayer.start();
-                            System.out.println("should be playing");
-                        } catch (IOException e1) {
-                            e1.printStackTrace();
-                        }
-                    }
-                });
+    public void clickPlayAgain(String input) {
+        GlobalConstants.textToString(input, getActivity());
     }
 
     public void clickPlayAnother() {
@@ -123,4 +79,19 @@ public class DisplayFragment extends Fragment {
         startActivity(intent);
     }
 
+    public void clickToAddToLibrary(String input) {
+
+        SharedPreferences sharedPreferences = getActivity().getSharedPreferences("savedSpeeches", Context.MODE_PRIVATE);
+        String library;
+
+
+        if (sharedPreferences.getString("savedSpeeches", "") != null) {
+            library = sharedPreferences.getString("savedSpeeches", "") + "/" + input;
+        } else {
+            library = input;
+        }
+
+        //Toast.makeText(getActivity().getApplicationContext(), library, Toast.LENGTH_SHORT).show();
+        sharedPreferences.edit().putString("savedSpeeches", library).apply();
+    }
 }
