@@ -2,80 +2,38 @@
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent" android:layout_height="match_parent">
 
-    <Button
-        android:id="@+id/back"
-
-        android:text="Back"
-        android:textColor="#F6FAB9"
-        android:textSize="30sp"
-
-        android:layout_width="270dp"
-        android:layout_height="60dp"
-
-        android:shadowColor="#8A8A8A"
-        android:shadowDx="5"
-        android:shadowDy="5"
-        android:shadowRadius="5"
-        />
-    <Button
-        android:id="@+id/hearButton"
-
-        android:text="Hear"
-        android:textColor="#F6FAB9"
-        android:textSize="30sp"
-
-        android:layout_width="270dp"
-        android:layout_height="60dp"
-
-        android:shadowColor="#8A8A8A"
-        android:shadowDx="5"
-        android:shadowDy="5"
-        android:shadowRadius="5"
-
-        android:layout_gravity="right"
-        />
-
-    <Button
-        android:id="@+id/recordButton"
-
-        android:text="Record"
-        android:textColor="#F6FAB9"
-        android:textSize="30sp"
-
-        android:layout_width="270dp"
-        android:layout_height="60dp"
-
-        android:shadowColor="#8A8A8A"
-        android:shadowDx="5"
-        android:shadowDy="5"
-        android:shadowRadius="5"
-
-        android:layout_toRightOf="@+id/hearButton"
-        />
-
-    <Button
-        android:id="@+id/playButton"
-
-        android:text="Play"
-        android:textColor="#F6FAB9"
-        android:textSize="30sp"
-
-        android:layout_width="270dp"
-        android:layout_height="60dp"
-
-        android:shadowColor="#8A8A8A"
-        android:shadowDx="5"
-        android:shadowDy="5"
-        android:shadowRadius="5"
-
-        android:layout_toRightOf="@+id/recordButton"
-        />
-
     <TextView android:id="@+id/inputText"
         android:layout_centerHorizontal="true"
         android:layout_centerVertical="true"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content" />
 
+    <Button android:id="@+id/play_again"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/inputText"
+        android:text="Play Again"
+        android:layout_centerHorizontal="true"/>
+
+    <Button android:id="@+id/play_another"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_toLeftOf="@id/play_again"
+        android:text="Play Another"
+        android:layout_centerVertical="true"/>
+
+    <Button android:id="@+id/back"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_toRightOf="@id/play_again"
+        android:text="Back"
+        android:layout_centerVertical="true"/>
+
+    <Button android:id="@+id/add_to_library"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_toRightOf="@id/back"
+        android:text="Add To Library"
+        android:layout_centerVertical="true"/>
 
 </RelativeLayout>
