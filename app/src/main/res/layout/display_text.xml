@@ -19,21 +19,14 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_toLeftOf="@id/play_again"
-        android:text="Play Another"
-        android:layout_centerVertical="true"/>
-
-    <Button android:id="@+id/back"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_toRightOf="@id/play_again"
-        android:text="Back"
-        android:layout_centerVertical="true"/>
+        android:layout_below="@id/inputText"
+        android:text="Play Another" />
 
     <Button android:id="@+id/add_to_library"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_toRightOf="@id/back"
-        android:text="Add To Library"
-        android:layout_centerVertical="true"/>
+        android:layout_toRightOf="@id/play_again"
+        android:layout_below="@id/inputText"
+        android:text="Add To Library" />
 
 </RelativeLayout>
