@@ -8,25 +8,60 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content" />
 
-    <Button android:id="@+id/play_again"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_below="@id/inputText"
+    <Button
+        android:id="@+id/play_again"
+
         android:text="Play Again"
-        android:layout_centerHorizontal="true"/>
+        android:textColor="#FFFFFF"
+        android:textSize="15sp"
+        android:background="@drawable/buttonstyle"
 
-    <Button android:id="@+id/play_another"
-        android:layout_width="wrap_content"
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_toLeftOf="@id/play_again"
-        android:layout_below="@id/inputText"
-        android:text="Play Another" />
+        android:shadowColor="#A8A8A8"
+        android:shadowDx="-10"
+        android:shadowDy="-10"
+        android:shadowRadius="-5"
+        android:layout_above="@+id/play_another"
+        style="?android:attr/borderlessButtonStyle"
+        />
 
-    <Button android:id="@+id/add_to_library"
-        android:layout_width="wrap_content"
+
+    <Button
+        android:id="@+id/play_another"
+
+        android:text="Play Another"
+        android:textColor="#FFFFFF"
+        android:textSize="15sp"
+        android:background="@drawable/buttonstyle"
+
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_toRightOf="@id/play_again"
-        android:layout_below="@id/inputText"
-        android:text="Add To Library" />
+        android:shadowColor="#A8A8A8"
+        android:shadowDx="2"
+        android:shadowDy="2"
+        android:shadowRadius="5"
+
+        android:layout_above="@+id/add_to_library"
+        style="?android:attr/borderlessButtonStyle"
+        />
+
+    <Button
+        android:id="@+id/add_to_library"
+
+        android:text="Add To Library"
+        android:textColor="#FFFFFF"
+        android:textSize="15sp"
+        android:background="@drawable/buttonstyle"
+
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:shadowColor="#A8A8A8"
+        android:shadowDx="2"
+        android:shadowDy="2"
+        android:shadowRadius="5"
+
+        android:layout_alignParentBottom="true"
+        style="?android:attr/borderlessButtonStyle"/>
 
 </RelativeLayout>

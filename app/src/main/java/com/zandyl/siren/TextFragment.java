@@ -56,6 +56,11 @@ public class TextFragment extends Fragment {
         //Toast.makeText(getActivity().getApplicationContext(), "download started", Toast.LENGTH_SHORT).show();
         input = minputText.getText().toString();
 
+        if (input.equals("")) {
+            Toast.makeText(getActivity().getApplicationContext(), "Please enter some text", Toast.LENGTH_SHORT).show();
+            return;
+        }
+
         //        String formattedInput = input.replace(' ', '+');
 //        Toast.makeText(getActivity().getApplicationContext(),"download started", Toast.LENGTH_SHORT).show();
 
