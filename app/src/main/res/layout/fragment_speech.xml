@@ -6,27 +6,31 @@
     <Button
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="Hear"
-        android:id="@+id/hearButton"
-        android:layout_gravity="right" />
+        android:text="Record"
+        android:id="@+id/recordButton"
+        android:layout_centerHorizontal="true"
+        android:layout_centerVertical="true"/>
 
     <Button
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="Record"
-        android:id="@+id/recordButton"
-        android:layout_toRightOf="@id/hearButton"/>
+        android:text="Hear"
+        android:id="@+id/hearButton"
+        android:layout_centerVertical="true"
+        android:layout_toLeftOf="@id/recordButton"/>
 
     <Button
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="Play"
         android:id="@+id/playButton"
-        android:layout_toRightOf="@id/recordButton"/>
+        android:layout_toRightOf="@id/recordButton"
+        android:layout_centerVertical="true"/>
 
-    <TextView android:id="@+id/inputText"
-        android:layout_centerHorizontal="true"
+    <TextView android:id="@+id/convertedText"
         android:layout_centerVertical="true"
+        android:layout_centerHorizontal="true"
+        android:layout_above="@id/recordButton"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content" />
 
