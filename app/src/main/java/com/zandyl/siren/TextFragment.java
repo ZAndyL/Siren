@@ -49,7 +49,6 @@ public class TextFragment extends Fragment {
 
         minputText = (EditText)textView.findViewById(R.id.inputText);
 
-
         return textView;
     }
 

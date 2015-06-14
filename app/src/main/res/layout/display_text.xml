@@ -2,35 +2,38 @@
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent" android:layout_height="match_parent">
 
-    <Button android:id="@+id/back"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content" />
-
-    <Button
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="Hear"
-        android:id="@+id/hearButton"
-        android:layout_gravity="right" />
-
-    <Button
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="Record"
-        android:id="@+id/recordButton"
-        android:layout_toRightOf="@id/hearButton"/>
-    <Button
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="Play"
-        android:id="@+id/playButton"
-        android:layout_toRightOf="@id/recordButton"/>
-
     <TextView android:id="@+id/inputText"
         android:layout_centerHorizontal="true"
         android:layout_centerVertical="true"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content" />
 
+    <Button android:id="@+id/play_again"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/inputText"
+        android:text="Play Again"
+        android:layout_centerHorizontal="true"/>
+
+    <Button android:id="@+id/play_another"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_toLeftOf="@id/play_again"
+        android:text="Play Another"
+        android:layout_centerVertical="true"/>
+
+    <Button android:id="@+id/back"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_toRightOf="@id/play_again"
+        android:text="Back"
+        android:layout_centerVertical="true"/>
+
+    <Button android:id="@+id/add_to_library"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_toRightOf="@id/back"
+        android:text="Add To Library"
+        android:layout_centerVertical="true"/>
 
 </RelativeLayout>

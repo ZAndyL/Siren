@@ -5,6 +5,7 @@
     <string name="action_settings">Settings</string>
     <string-array name="drawer_items">
         <item>Text to Speech</item>
+        <item>Speech to Text</item>
         <item>Process Image</item>
         <item>Saved Messages</item>
     </string-array>
