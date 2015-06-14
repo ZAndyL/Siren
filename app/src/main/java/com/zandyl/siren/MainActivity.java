@@ -4,6 +4,7 @@ import android.app.Fragment;
 import android.app.FragmentTransaction;
 import android.content.Intent;
 import android.content.res.Resources;
+import android.graphics.drawable.ColorDrawable;
 import android.os.Bundle;
 import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.ActionBarActivity;
@@ -39,6 +40,8 @@ public class MainActivity extends ActionBarActivity {
             ft.commit();
         }
 
+        getSupportActionBar().setBackgroundDrawable(new ColorDrawable(0xFF01579B));
+
         ListView list = (ListView)findViewById(R.id.left_drawer);
         View header = (View)getLayoutInflater().inflate(R.layout.drawer_header,null);
 
@@ -46,7 +49,7 @@ public class MainActivity extends ActionBarActivity {
         list.addHeaderView(header);
         Resources resources = getResources();
         list.setAdapter(new ArrayAdapter<String>(this,
-            android.R.layout.simple_list_item_single_choice, resources.getStringArray(R.array.drawer_items)));
+            android.R.layout.simple_list_item_activated_1, resources.getStringArray(R.array.drawer_items)));
 
         list.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
@@ -58,13 +61,13 @@ public class MainActivity extends ActionBarActivity {
                             fragment = new TextFragment();
                             break;
                         case 2:
-                            fragment = new SpeechFragment();
+                            fragment = new MessagesFragment();
                             break;
                         case 3:
-                            fragment = new CameraFragment();
+                            fragment = new SpeechFragment();
                             break;
                         case 4:
-                            fragment = new MessagesFragment();
+                            fragment = new CameraFragment();
                             break;
                         default:
                             break;
@@ -86,6 +89,37 @@ public class MainActivity extends ActionBarActivity {
 
         mDrawer = list;
         mDrawerLayout = (DrawerLayout) findViewById(R.id.drawer_layout);
+        Intent intent = getIntent();
+        if (intent.getIntExtra(DisplayActivity.FRAGMENT_NUMBER, 0) > 0){
+            mDrawer.setItemChecked(intent.getIntExtra(DisplayActivity.FRAGMENT_NUMBER, 0), true);
+
+            Fragment fragment = new Fragment();
+            switch(intent.getIntExtra(DisplayActivity.FRAGMENT_NUMBER, 0)) {
+                case 1:
+                    fragment = new TextFragment();
+                    break;
+                case 2:
+                    fragment = new MessagesFragment();
+                    break;
+                case 3:
+                    fragment = new SpeechFragment();
+                    break;
+                case 4:
+                    fragment = new CameraFragment();
+                    break;
+                default:
+                    break;
+            }
+
+            if (fragment != null){
+                FragmentTransaction ft = getFragmentManager().beginTransaction();
+                ft.replace(R.id.content_frame, fragment);
+                ft.commit();
+            }
+        }
+        else{
+            mDrawer.setItemChecked(1, true);
+        }
     }
 
     @Override
