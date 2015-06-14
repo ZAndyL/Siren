@@ -1,7 +1,9 @@
 package com.zandyl.siren;
 
+import android.app.AlertDialog;
 import android.app.Fragment;
 import android.content.Context;
+import android.content.DialogInterface;
 import android.content.SharedPreferences;
 import android.media.MediaPlayer;
 import android.os.Bundle;
@@ -26,6 +28,9 @@ import java.util.ArrayList;
 public class MessagesFragment extends Fragment{
 
     ListView listView;
+    ArrayList<String> speechesList;
+    ArrayAdapter<String> adapter;
+    SharedPreferences sharedPreferences;
 
     public MessagesFragment() {}
 
@@ -36,28 +41,35 @@ public class MessagesFragment extends Fragment{
 
         listView = (ListView)messagesView.findViewById(R.id.saved_list);
 
-        SharedPreferences sharedPreferences = getActivity().getSharedPreferences("savedSpeeches", Context.MODE_PRIVATE);
+        sharedPreferences = getActivity().getSharedPreferences("savedSpeeches", Context.MODE_PRIVATE);
         String speechesText = sharedPreferences.getString("savedSpeeches", "");
 
-        if (!speechesText.equals("") || speechesText != null) {
-            //Toast.makeText(getActivity().getApplicationContext(), speechesText, Toast.LENGTH_SHORT).show();
-        } else {
-            //Toast.makeText(getActivity().getApplicationContext(), "Nothing in the shared preference", Toast.LENGTH_SHORT).show();
-        }
-
         String[] speeches = speechesText.split("/");
+        speechesList = new ArrayList<String>();
+
+        for (int i = 1; i < speeches.length; i++) {
+            speechesList.add(speeches[i]);
+        }
         //Toast.makeText(getActivity().getApplicationContext(), speeches[1], Toast.LENGTH_SHORT).show();
 
-        ArrayAdapter<String> adapter = new ArrayAdapter<String>(getActivity(), android.R.layout.simple_list_item_1, speeches);
+        adapter = new ArrayAdapter<String>(getActivity(), android.R.layout.simple_list_item_1, speechesList);
         listView.setAdapter(adapter);
 
         listView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
                 int itemPosition = i;
-                String itemValue = (String)listView.getItemAtPosition(itemPosition);
+                String itemValue = (String) listView.getItemAtPosition(itemPosition);
                 textToSpeech(itemValue);
 
+            }
+        });
+
+        listView.setOnItemLongClickListener(new AdapterView.OnItemLongClickListener() {
+            @Override
+            public boolean onItemLongClick(AdapterView<?> adapterView, View view, int i, long l) {
+                removeItemFromPosition(i);
+                return true;
             }
         });
 
@@ -65,33 +77,42 @@ public class MessagesFragment extends Fragment{
     }
 
     public void textToSpeech(String itemValue) {
-        Ion.with(getActivity().getApplicationContext())
-                .load("https://montanaflynn-text-to-speech.p.mashape.com/speak")
-                .setHeader("X-Mashape-Key", "s18BGdQkJJmshz0FiUHRWGFJW7CLp1e5djojsnPLRnAvb2RAfi")
-                .setBodyParameter("text", itemValue)
-                .write(new File("/sdcard/test.matroska"))
-                .setCallback(new FutureCallback<File>() {
-                    @Override
-                    public void onCompleted(Exception e, File file) {
-                        Toast.makeText(getActivity().getApplicationContext(), "download completed", Toast.LENGTH_SHORT).show();
-
-                        if (e != null) {
-                            e.printStackTrace();
-                        }
-                        if (file == null) {
-                            System.out.println("file is null");
-                        }
-
-                        MediaPlayer mediaPlayer = new MediaPlayer();
-                        try {
-                            mediaPlayer.setDataSource(file.getPath());
-                            mediaPlayer.prepare();
-                            mediaPlayer.start();
-                            System.out.println("should be playing");
-                        } catch (IOException e1) {
-                            e1.printStackTrace();
-                        }
-                    }
-                });
+        GlobalConstants.textToSpeech(itemValue,getActivity());
     }
+
+    public void removeItemFromPosition(int i) {
+        final int position = i;
+
+        AlertDialog.Builder alert = new AlertDialog.Builder(getActivity());
+
+        alert.setTitle("Delete Speech");
+        alert.setMessage("Do you want to delete this speech?");
+
+        alert.setPositiveButton("YES", new DialogInterface.OnClickListener() {
+            @Override
+            public void onClick(DialogInterface dialogInterface, int i) {
+                speechesList.remove(position);
+                String speechText = "";
+
+                for (int j = 0; j < speechesList.size(); j++) {
+                    speechText = speechText + "/" + speechesList.get(j);
+                }
+
+                sharedPreferences.edit().putString("savedSpeeches", speechText).apply();
+
+                adapter.notifyDataSetChanged();
+                adapter.notifyDataSetInvalidated();
+            }
+        });
+
+        alert.setNegativeButton("Cancel", new DialogInterface.OnClickListener() {
+            @Override
+            public void onClick(DialogInterface dialogInterface, int i) {
+                dialogInterface.dismiss();
+            }
+        });
+        alert.show();
+
+    }
+
 }
