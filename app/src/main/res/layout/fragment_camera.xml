@@ -43,7 +43,8 @@
         android:background="@drawable/buttonstyle"
         android:fontFamily="sans-serif-condensed"
         android:id="@+id/pickImageButton"
-        android:layout_above="@id/imageButton"/>
+        android:layout_above="@id/imageButton"
+        style="?android:attr/borderlessButtonStyle"/>
 
 
 

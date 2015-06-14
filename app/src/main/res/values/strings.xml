@@ -12,7 +12,7 @@
         <item>Speech to Text</item>
         <item>Process Image</item>
     </string-array>
-    <string name="fragment_text_text">What should I say?</string>
+    <string name="fragment_text_text">What do you want to say?</string>
     <string name="display_activity_text">You said:</string>
     <string name="fragment_speech_text">Say something!</string>
 </resources>
