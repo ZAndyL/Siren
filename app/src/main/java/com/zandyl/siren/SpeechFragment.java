@@ -136,8 +136,7 @@ public class SpeechFragment extends Fragment {
                                                 String text = result.getAsJsonArray("actions").get(0).getAsJsonObject().getAsJsonObject("result").getAsJsonArray("document").get(0).getAsJsonObject().get("content").getAsString();
 
                                                 convertedText.setText(text);
-                                                //System.out.println("poop" + text);
-                                                //Toast.makeText(getActivity(), "Speech to text output: " + text, Toast.LENGTH_SHORT).show();
+                                                Toast.makeText(getActivity(), "Speech to text output: " + text, Toast.LENGTH_SHORT).show();
                                             }
                                         }
                                     });

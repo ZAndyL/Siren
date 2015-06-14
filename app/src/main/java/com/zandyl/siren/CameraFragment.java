@@ -1,6 +1,7 @@
 package com.zandyl.siren;
 
 import android.app.Activity;
+import android.content.Context;
 import android.content.Intent;
 import android.graphics.Bitmap;
 import android.net.Uri;
@@ -10,6 +11,11 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.app.Fragment;
+import android.view.textservice.SentenceSuggestionsInfo;
+import android.view.textservice.SpellCheckerSession;
+import android.view.textservice.SuggestionsInfo;
+import android.view.textservice.TextInfo;
+import android.view.textservice.TextServicesManager;
 import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.TextView;
@@ -24,15 +30,20 @@ import java.io.FileOutputStream;
 /**
  * Created by stevedavis on 15-06-13.
  */
-public class CameraFragment extends Fragment {
+public class CameraFragment extends Fragment implements SpellCheckerSession.SpellCheckerSessionListener{
 
     ImageView imageView;
     TextView ocrText;
+    private SpellCheckerSession mScs;
     public CameraFragment() {}
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
+
+        final TextServicesManager tsm = (TextServicesManager) getActivity().getSystemService(
+                Context.TEXT_SERVICES_MANAGER_SERVICE);
+        mScs = tsm.newSpellCheckerSession(null, null, this, true);
 
         View cameraView = inflater.inflate(R.layout.fragment_camera, container, false);
 
@@ -93,6 +104,11 @@ public class CameraFragment extends Fragment {
                                                 System.out.println(result);
                                                 String text = result.getAsJsonArray("actions").get(0).getAsJsonObject().getAsJsonObject("result").getAsJsonArray("text_block").get(0).getAsJsonObject().get("text").getAsString();
                                                 text = text.replaceAll("[^A-Za-z0-9 ,.]", "");
+                                                text = text.replace("apos", "'");
+                                                text = text.replace("quot", "\"");
+
+                                                mScs.getSuggestions(new TextInfo(text), 5);
+
                                                 ocrText.setText(text);
                                             }
                                         }
@@ -127,5 +143,15 @@ public class CameraFragment extends Fragment {
                 }
                 break;
         }
+    }
+
+    @Override
+    public void onGetSuggestions(SuggestionsInfo[] results) {
+
+    }
+
+    @Override
+    public void onGetSentenceSuggestions(SentenceSuggestionsInfo[] results) {
+
     }
 }
