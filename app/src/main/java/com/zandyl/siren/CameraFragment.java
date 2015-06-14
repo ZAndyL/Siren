@@ -228,7 +228,16 @@ public class CameraFragment extends Fragment{
                     int columnIndex = cursor.getColumnIndex(filePathColumn[0]);
                     String picturePath = cursor.getString(columnIndex);
                     cursor.close();
-                    imageView.setImageBitmap(BitmapFactory.decodeFile(picturePath));
+                    Bitmap imageBitmap = BitmapFactory.decodeFile(picturePath);
+                    try {
+                        FileOutputStream out = new FileOutputStream(GlobalConstants.imageLoc);
+                        imageBitmap.compress(Bitmap.CompressFormat.PNG, 90, out);
+                        out.flush();
+                        out.close();
+                    } catch (Exception e) {
+                        e.printStackTrace();
+                    }
+                    imageView.setImageBitmap(imageBitmap);
                 }
         }
     }
