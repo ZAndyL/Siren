@@ -5,7 +5,7 @@
     android:background="@drawable/fragment_background">
 
     <TextView
-        android:layout_width="wrap_content"
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:text="@string/fragment_text_text"
         android:textSize="45dip"
@@ -28,6 +28,7 @@
 
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:layout_marginBottom="20dp"
 
         android:layout_alignParentBottom="true"
         style="?android:attr/borderlessButtonStyle"
@@ -36,7 +37,9 @@
     <EditText android:id="@+id/inputText"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_centerVertical="true"
-        android:layout_centerHorizontal="true" />
+        android:layout_centerInParent="true"
+        android:gravity="center"
+        android:textSize="25dp"
+        android:fontFamily="sans-serif"/>
 
 </RelativeLayout>
