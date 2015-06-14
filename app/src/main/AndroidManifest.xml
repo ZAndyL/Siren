@@ -15,7 +15,6 @@
         android:icon="@mipmap/ic_launcher"
         android:label="@string/app_name"
         android:theme="@style/AppTheme" >
-        <meta-data android:name="io.branch.sdk.BranchKey" android:value="key_live_mkbs6L9lFgpJC0G5qKXC4afgBthyGwhz" />
         <activity
             android:name=".MainActivity"
             android:label="@string/app_name"
