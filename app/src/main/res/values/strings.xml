@@ -15,4 +15,5 @@
     <string name="fragment_text_text">What should I say?</string>
     <string name="display_activity_text">You said:</string>
     <string name="fragment_speech_text">Say something!</string>
+    <string name="branch_key">key_live_mgfF0TMZo02Z8PUT5oIwJknhyyai9FxH</string>
 </resources>

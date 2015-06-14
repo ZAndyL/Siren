@@ -55,7 +55,6 @@ public class CameraFragment extends Fragment{
         ocrText = (TextView)cameraView.findViewById(R.id.ocrText);
         listView = (ListView) cameraView.findViewById(R.id.listView);
 
-        entities.add("Andy Liang");
         ArrayAdapter<String> adapter = new ArrayAdapter<String>(getActivity(), android.R.layout.simple_list_item_1, entities);
         listView.setAdapter(adapter);
 

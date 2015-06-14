@@ -17,6 +17,11 @@ import android.widget.ArrayAdapter;
 import android.widget.EditText;
 import android.widget.ListView;
 
+import org.json.JSONObject;
+
+import io.branch.referral.Branch;
+import io.branch.referral.BranchError;
+
 //import com.ibm.mobile.services.core.IBMBluemix;
 
 //import com.ibm.mobile.services.core.IBMBluemix;
@@ -54,36 +59,35 @@ public class MainActivity extends ActionBarActivity {
         list.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-                    Fragment fragment = null;
+                Fragment fragment = null;
 
-                    switch(position) {
-                        case 1:
-                            fragment = new TextFragment();
-                            break;
-                        case 2:
-                            fragment = new MessagesFragment();
-                            break;
-                        case 3:
-                            fragment = new SpeechFragment();
-                            break;
-                        case 4:
-                            fragment = new CameraFragment();
-                            break;
-                        default:
-                            break;
-                    }
+                switch (position) {
+                    case 1:
+                        fragment = new TextFragment();
+                        break;
+                    case 2:
+                        fragment = new MessagesFragment();
+                        break;
+                    case 3:
+                        fragment = new SpeechFragment();
+                        break;
+                    case 4:
+                        fragment = new CameraFragment();
+                        break;
+                    default:
+                        break;
+                }
 
-                    if (fragment != null){
-                        FragmentTransaction ft = getFragmentManager().beginTransaction();
-                        ft.replace(R.id.content_frame, fragment);
-                        ft.commit();
-                    }
-                    else {
-                        // error in creating fragment
-                        Log.e("MainActivity", "Error in creating fragment");
-                    }
+                if (fragment != null) {
+                    FragmentTransaction ft = getFragmentManager().beginTransaction();
+                    ft.replace(R.id.content_frame, fragment);
+                    ft.commit();
+                } else {
+                    // error in creating fragment
+                    Log.e("MainActivity", "Error in creating fragment");
+                }
 
-                    mDrawerLayout.closeDrawer(mDrawer);
+                mDrawerLayout.closeDrawer(mDrawer);
             }
         });
 
@@ -148,4 +152,27 @@ public class MainActivity extends ActionBarActivity {
     public void onActivityResult(int requestCode, int resultCode, Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
     }
+
+    @Override
+    public void onStart() {
+        super.onStart();
+
+        Branch branch = Branch.getInstance(getApplicationContext());
+        branch.initSession(new Branch.BranchReferralInitListener() {
+            @Override
+            public void onInitFinished(JSONObject referringParams, BranchError error) {
+                if (error == null) {
+                    // params are the deep linked params associated with the link that the user clicked before showing up
+                    Log.i("BranchConfigTest", "deep link data: " + referringParams.toString());
+                }
+            }
+        }, this.getIntent().getData(), this);
+    }
+
+    @Override
+    public void onStop() {
+        super.onStop();
+        Branch.getInstance(getApplicationContext()).closeSession();
+    }
+
 }
