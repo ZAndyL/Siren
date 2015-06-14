@@ -19,18 +19,16 @@ public class GlobalConstants {
     public static String mp3Loc = "/sdcard/test.mp3";
     public static String imageLoc = "/sdcard/pic.png";
 
-    public static void textToString(String input, Context context) {
+    public static void textToSpeech(String input, Context context) {
         final Context safeContext = context;
         Ion.with(safeContext)
                 .load("https://montanaflynn-text-to-speech.p.mashape.com/speak")
                 .setHeader("X-Mashape-Key", "s18BGdQkJJmshz0FiUHRWGFJW7CLp1e5djojsnPLRnAvb2RAfi")
                 .setBodyParameter("text", input)
-                .write(new File("/sdcard/test.mp3"))
+                .write(new File(GlobalConstants.mp3Loc))
                 .setCallback(new FutureCallback<File>() {
                     @Override
                     public void onCompleted(Exception e, File file) {
-                        Toast.makeText(safeContext, "download completed", Toast.LENGTH_SHORT).show();
-
                         if (e != null) {
                             e.printStackTrace();
                         }

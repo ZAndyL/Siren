@@ -4,13 +4,25 @@
     android:layout_height="match_parent"
     android:background="@drawable/fragment_background">
 
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/fragment_speech_text"
+        android:textSize="45dip"
+        android:gravity="right"
+        android:fontFamily="sans-serif-medium"
+        android:background="@android:color/transparent"
+        android:textColor="@android:color/white"
+        android:layout_centerInParent="true"/>
+
     <Button
         android:id="@+id/hearButton"
-        android:text="Listen"
+        android:text="Convert To Text"
         android:textColor="#FFFFFF"
         android:textSize="15sp"
         android:background="@drawable/buttonstyle"
         android:fontFamily="sans-serif-condensed"
+        android:layout_marginBottom="20dp"
 
         android:layout_width="match_parent"
         android:layout_height="wrap_content"

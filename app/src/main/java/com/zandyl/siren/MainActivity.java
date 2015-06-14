@@ -4,6 +4,7 @@ import android.app.Fragment;
 import android.app.FragmentTransaction;
 import android.content.Intent;
 import android.content.res.Resources;
+import android.graphics.drawable.ColorDrawable;
 import android.os.Bundle;
 import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.ActionBarActivity;
@@ -15,6 +16,11 @@ import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.EditText;
 import android.widget.ListView;
+
+import org.json.JSONObject;
+
+import io.branch.referral.Branch;
+import io.branch.referral.BranchError;
 
 //import com.ibm.mobile.services.core.IBMBluemix;
 
@@ -39,6 +45,8 @@ public class MainActivity extends ActionBarActivity {
             ft.commit();
         }
 
+        getSupportActionBar().setBackgroundDrawable(new ColorDrawable(0xFF01579B));
+
         ListView list = (ListView)findViewById(R.id.left_drawer);
         View header = (View)getLayoutInflater().inflate(R.layout.drawer_header,null);
 
@@ -46,46 +54,76 @@ public class MainActivity extends ActionBarActivity {
         list.addHeaderView(header);
         Resources resources = getResources();
         list.setAdapter(new ArrayAdapter<String>(this,
-            android.R.layout.simple_list_item_single_choice, resources.getStringArray(R.array.drawer_items)));
+            android.R.layout.simple_list_item_activated_1, resources.getStringArray(R.array.drawer_items)));
 
         list.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-                    Fragment fragment = null;
+                Fragment fragment = null;
 
-                    switch(position) {
-                        case 1:
-                            fragment = new TextFragment();
-                            break;
-                        case 2:
-                            fragment = new SpeechFragment();
-                            break;
-                        case 3:
-                            fragment = new CameraFragment();
-                            break;
-                        case 4:
-                            fragment = new MessagesFragment();
-                            break;
-                        default:
-                            break;
-                    }
+                switch (position) {
+                    case 1:
+                        fragment = new TextFragment();
+                        break;
+                    case 2:
+                        fragment = new MessagesFragment();
+                        break;
+                    case 3:
+                        fragment = new SpeechFragment();
+                        break;
+                    case 4:
+                        fragment = new CameraFragment();
+                        break;
+                    default:
+                        break;
+                }
 
-                    if (fragment != null){
-                        FragmentTransaction ft = getFragmentManager().beginTransaction();
-                        ft.replace(R.id.content_frame, fragment);
-                        ft.commit();
-                    }
-                    else {
-                        // error in creating fragment
-                        Log.e("MainActivity", "Error in creating fragment");
-                    }
+                if (fragment != null) {
+                    FragmentTransaction ft = getFragmentManager().beginTransaction();
+                    ft.replace(R.id.content_frame, fragment);
+                    ft.commit();
+                } else {
+                    // error in creating fragment
+                    Log.e("MainActivity", "Error in creating fragment");
+                }
 
-                    mDrawerLayout.closeDrawer(mDrawer);
+                mDrawerLayout.closeDrawer(mDrawer);
             }
         });
 
         mDrawer = list;
         mDrawerLayout = (DrawerLayout) findViewById(R.id.drawer_layout);
+        Intent intent = getIntent();
+        if (intent.getIntExtra(DisplayActivity.FRAGMENT_NUMBER, 0) > 0){
+            mDrawer.setItemChecked(intent.getIntExtra(DisplayActivity.FRAGMENT_NUMBER, 0), true);
+
+            Fragment fragment = new Fragment();
+            switch(intent.getIntExtra(DisplayActivity.FRAGMENT_NUMBER, 0)) {
+                case 1:
+                    fragment = new TextFragment();
+                    break;
+                case 2:
+                    fragment = new MessagesFragment();
+                    break;
+                case 3:
+                    fragment = new SpeechFragment();
+                    break;
+                case 4:
+                    fragment = new CameraFragment();
+                    break;
+                default:
+                    break;
+            }
+
+            if (fragment != null){
+                FragmentTransaction ft = getFragmentManager().beginTransaction();
+                ft.replace(R.id.content_frame, fragment);
+                ft.commit();
+            }
+        }
+        else{
+            mDrawer.setItemChecked(1, true);
+        }
     }
 
     @Override
@@ -114,4 +152,27 @@ public class MainActivity extends ActionBarActivity {
     public void onActivityResult(int requestCode, int resultCode, Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
     }
+
+    @Override
+    public void onStart() {
+        super.onStart();
+
+        Branch branch = Branch.getInstance(getApplicationContext());
+        branch.initSession(new Branch.BranchReferralInitListener() {
+            @Override
+            public void onInitFinished(JSONObject referringParams, BranchError error) {
+                if (error == null) {
+                    // params are the deep linked params associated with the link that the user clicked before showing up
+                    Log.i("BranchConfigTest", "deep link data: " + referringParams.toString());
+                }
+            }
+        }, this.getIntent().getData(), this);
+    }
+
+    @Override
+    public void onStop() {
+        super.onStop();
+        Branch.getInstance(getApplicationContext()).closeSession();
+    }
+
 }
