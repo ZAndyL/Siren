@@ -4,21 +4,12 @@ import android.app.Fragment;
 import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
-import android.media.MediaPlayer;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.TextView;
-import android.widget.Toast;
-
-import com.google.gson.JsonObject;
-import com.koushikdutta.async.future.FutureCallback;
-import com.koushikdutta.ion.Ion;
-
-import java.io.File;
-import java.io.IOException;
 
 /**
  * Created by uzairhaq on 15-06-13.
@@ -67,11 +58,11 @@ public class DisplayFragment extends Fragment {
     }
 
     public void textToSpeech(String input) {
-        GlobalConstants.textToString(input, getActivity());
+        GlobalConstants.textToSpeech(input, getActivity());
     }
 
     public void clickPlayAgain(String input) {
-        GlobalConstants.textToString(input, getActivity());
+        GlobalConstants.textToSpeech(input, getActivity());
     }
 
     public void clickPlayAnother() {

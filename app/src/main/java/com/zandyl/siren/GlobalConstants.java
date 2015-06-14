@@ -19,7 +19,7 @@ public class GlobalConstants {
     public static String mp3Loc = "/sdcard/test.mp3";
     public static String imageLoc = "/sdcard/pic.png";
 
-    public static void textToString(String input, Context context) {
+    public static void textToSpeech(String input, Context context) {
         final Context safeContext = context;
         Ion.with(safeContext)
                 .load("https://montanaflynn-text-to-speech.p.mashape.com/speak")
