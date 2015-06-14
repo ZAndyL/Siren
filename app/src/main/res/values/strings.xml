@@ -8,7 +8,7 @@
     <string name="Close">Close</string>
     <string-array name="drawer_items">
         <item>Text to Speech</item>
-        <item>Saved Messages</item>
+        <item>Speech Library</item>
         <item>Speech to Text</item>
         <item>Process Image</item>
     </string-array>
