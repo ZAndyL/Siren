@@ -57,67 +57,12 @@ public class DisplayFragment extends Fragment {
         return settingView;
     }
 
-    public void textToSpeech(String formattedInput) {
-
-        Ion.with(getActivity().getApplicationContext())
-                .load("https://montanaflynn-text-to-speech.p.mashape.com/speak")
-                .setHeader("X-Mashape-Key", "s18BGdQkJJmshz0FiUHRWGFJW7CLp1e5djojsnPLRnAvb2RAfi")
-                .setBodyParameter("text", formattedInput)
-                .write(new File("/sdcard/test.matroska"))
-                .setCallback(new FutureCallback<File>() {
-                    @Override
-                    public void onCompleted(Exception e, File file) {
-                        Toast.makeText(getActivity().getApplicationContext(), "download completed", Toast.LENGTH_SHORT).show();
-
-                        if (e != null) {
-                            e.printStackTrace();
-                        }
-                        if (file == null) {
-                            System.out.println("file is null");
-                        }
-
-                        MediaPlayer mediaPlayer = new MediaPlayer();
-                        try {
-                            mediaPlayer.setDataSource(file.getPath());
-                            mediaPlayer.prepare();
-                            mediaPlayer.start();
-                            System.out.println("should be playing");
-                        } catch (IOException e1) {
-                            e1.printStackTrace();
-                        }
-                    }
-                });
+    public void textToSpeech(String input) {
+        GlobalConstants.textToString(input, getActivity());
     }
 
-    public void clickPlayAgain(String formattedInput) {
-        Ion.with(getActivity().getApplicationContext())
-                .load("https://montanaflynn-text-to-speech.p.mashape.com/speak")
-                .setHeader("X-Mashape-Key", "s18BGdQkJJmshz0FiUHRWGFJW7CLp1e5djojsnPLRnAvb2RAfi")
-                .setBodyParameter("text", formattedInput)
-                .write(new File("/sdcard/test.matroska"))
-                .setCallback(new FutureCallback<File>() {
-                    @Override
-                    public void onCompleted(Exception e, File file) {
-                        Toast.makeText(getActivity().getApplicationContext(), "download completed", Toast.LENGTH_SHORT).show();
-
-                        if (e != null) {
-                            e.printStackTrace();
-                        }
-                        if (file == null) {
-                            System.out.println("file is null");
-                        }
-
-                        MediaPlayer mediaPlayer = new MediaPlayer();
-                        try {
-                            mediaPlayer.setDataSource(file.getPath());
-                            mediaPlayer.prepare();
-                            mediaPlayer.start();
-                            System.out.println("should be playing");
-                        } catch (IOException e1) {
-                            e1.printStackTrace();
-                        }
-                    }
-                });
+    public void clickPlayAgain(String input) {
+        GlobalConstants.textToString(input, getActivity());
     }
 
     public void clickPlayAnother() {
