@@ -176,7 +176,7 @@ public class CameraFragment extends Fragment{
                                         if (var4.size() > 0) {
                                             entities.clear();
                                             for (int i = 0; i < var4.size(); i++) {
-                                                JsonObject var5 = var4.get(0).getAsJsonObject();
+                                                JsonObject var5 = var4.get(i).getAsJsonObject();
                                                 String var6 = var5.get("normalized_text").getAsString();
                                                 entities.add(var6);
                                             }
