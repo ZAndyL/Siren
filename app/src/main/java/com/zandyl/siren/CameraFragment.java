@@ -10,8 +10,10 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.app.Fragment;
+import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.ImageView;
+import android.widget.ListView;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -22,6 +24,7 @@ import com.koushikdutta.ion.Ion;
 
 import java.io.File;
 import java.io.FileOutputStream;
+import java.util.ArrayList;
 import java.util.List;
 
 /**
@@ -31,8 +34,8 @@ public class CameraFragment extends Fragment{
 
     ImageView imageView;
     TextView ocrText;
-    List<String> entities;
-
+    ArrayList<String> entities = new ArrayList<String>();
+    ListView listView;
 
     public CameraFragment() {}
 
@@ -46,6 +49,11 @@ public class CameraFragment extends Fragment{
 
         imageView = (ImageView)cameraView.findViewById(R.id.imageView);
         ocrText = (TextView)cameraView.findViewById(R.id.ocrText);
+        listView = (ListView) cameraView.findViewById(R.id.listView);
+
+        entities.add("Andy Liang");
+        ArrayAdapter<String> adapter = new ArrayAdapter<String>(getActivity(), android.R.layout.simple_list_item_1, entities);
+        listView.setAdapter(adapter);
 
         imageButton.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -148,10 +156,14 @@ public class CameraFragment extends Fragment{
                                         JsonObject var3 = var2.getAsJsonObject("result");
                                         JsonArray var4 = var3.getAsJsonArray("entities");
                                         if(var4.size()>0){
-                                            JsonObject var5 = var4.get(0).getAsJsonObject();
-                                            String var6 = var5.get("normalized_text").getAsString();
-                                            Toast.makeText(getActivity(), var6, Toast.LENGTH_SHORT).show();
-                                            GlobalConstants.textToSpeech(var6, getActivity());
+                                            entities.clear();
+                                            for (int i = 0; i < var4.size(); i++){
+                                                JsonObject var5 = var4.get(0).getAsJsonObject();
+                                                String var6 = var5.get("normalized_text").getAsString();
+                                                entities.add(var6);
+                                            }
+                                            ((ArrayAdapter<String>) listView.getAdapter()).notifyDataSetChanged();
+
                                         }
                                     }
                                 });
