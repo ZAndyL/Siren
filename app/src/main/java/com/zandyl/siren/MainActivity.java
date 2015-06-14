@@ -17,6 +17,7 @@ import android.widget.ArrayAdapter;
 import android.widget.EditText;
 import android.widget.ListView;
 
+import org.json.JSONException;
 import org.json.JSONObject;
 
 import io.branch.referral.Branch;
@@ -154,21 +155,32 @@ public class MainActivity extends ActionBarActivity {
     }
 
     @Override
-    public void onStart() {
+    protected void onStart() {
         super.onStart();
 
         Branch branch = Branch.getInstance(getApplicationContext());
         branch.initSession(new Branch.BranchReferralInitListener() {
             @Override
             public void onInitFinished(JSONObject referringParams, BranchError error) {
+
                 if (error == null) {
+                    //go straight to the main activity if theres a room already selected
+                    if (referringParams.has("room_name")) {
+                        try {
+                            String roomName = referringParams.getString("room_name");
+                            if (!roomName.isEmpty()) {
+                                System.out.println(roomName);
+                            }
+                        } catch (JSONException e) {
+                            //do nothing
+                        }
+                    }
                     // params are the deep linked params associated with the link that the user clicked before showing up
                     Log.i("BranchConfigTest", "deep link data: " + referringParams.toString());
                 }
             }
         }, this.getIntent().getData(), this);
     }
-
     @Override
     public void onStop() {
         super.onStop();
