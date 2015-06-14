@@ -13,6 +13,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.app.Fragment;
+import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.ImageView;
@@ -54,6 +55,15 @@ public class CameraFragment extends Fragment{
         imageView = (ImageView)cameraView.findViewById(R.id.imageView);
         ocrText = (TextView)cameraView.findViewById(R.id.ocrText);
         listView = (ListView) cameraView.findViewById(R.id.listView);
+        listView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+            @Override
+            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+                String entity = entities.get(position);
+                entity = entity.replace(" ", "+");
+                Intent browserIntent = new Intent(Intent.ACTION_VIEW, Uri.parse("http://www.google.com/#q=" + entity));
+                startActivity(browserIntent);
+            }
+        });
 
         ArrayAdapter<String> adapter = new ArrayAdapter<String>(getActivity(), android.R.layout.simple_list_item_1, entities);
         listView.setAdapter(adapter);
@@ -99,22 +109,22 @@ public class CameraFragment extends Fragment{
                             e.printStackTrace();
                             return;
                         }
-                        if (result != null){
+                        if (result != null) {
                             String jobID = result.get("jobID").getAsString();
                             Ion.with(getActivity())
-                                    .load( "https://api.idolondemand.com/1/job/result/" + jobID)
+                                    .load("https://api.idolondemand.com/1/job/result/" + jobID)
                                     .setBodyParameter("apikey", GlobalConstants.idolApiKey)
                                     .asJsonObject()
                                     .setCallback(new FutureCallback<JsonObject>() {
                                         @Override
                                         public void onCompleted(Exception e, JsonObject result) {
-                                            if(e != null){
+                                            if (e != null) {
                                                 e.printStackTrace();
                                             }
-                                            if (result!= null){
+                                            if (result != null) {
                                                 System.out.println(result);
                                                 String text = result.getAsJsonArray("actions").get(0).getAsJsonObject().getAsJsonObject("result").getAsJsonArray("text_block").get(0).getAsJsonObject().get("text").getAsString();
-                                                text = text.replaceAll("[^A-Za-z0-9 ,.]", "");
+                                                text = text.replaceAll("[^A-Za-z0-9 ,.]", " ");
                                                 text = text.replace("apos", "'");
                                                 text = text.replace("quot", "\"");
 
