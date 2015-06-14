@@ -2,7 +2,9 @@ package com.zandyl.siren;
 
 import android.app.Fragment;
 import android.app.FragmentTransaction;
+import android.content.Context;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.content.res.Resources;
 import android.graphics.drawable.ColorDrawable;
 import android.os.Bundle;
@@ -165,12 +167,18 @@ public class MainActivity extends ActionBarActivity {
 
                 if (error == null) {
                     //go straight to the main activity if theres a room already selected
-                    if (referringParams.has("room_name")) {
+                    if (referringParams.has("message")) {
                         try {
-                            String roomName = referringParams.getString("room_name");
-                            if (!roomName.isEmpty()) {
-                                System.out.println(roomName);
+                            SharedPreferences sharedPreferences = getSharedPreferences("savedSpeeches", Context.MODE_PRIVATE);
+                            String library;
+                            if (sharedPreferences.getString("savedSpeeches", "") != null) {
+                                library = sharedPreferences.getString("savedSpeeches", "") + "/" + referringParams.getString("message");
+                            } else {
+                                library = referringParams.getString("message");
                             }
+
+                            //Toast.makeText(getActivity().getApplicationContext(), library, Toast.LENGTH_SHORT).show();
+                            sharedPreferences.edit().putString("savedSpeeches", library).apply();
                         } catch (JSONException e) {
                             //do nothing
                         }

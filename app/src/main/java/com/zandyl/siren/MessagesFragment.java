@@ -124,7 +124,7 @@ public class MessagesFragment extends Fragment{
 
                 JSONObject stuff = new JSONObject();
                 try {
-                    stuff.put("message", position);
+                    stuff.put("message", speechesList.get(position));
                 } catch (JSONException e) {
                     e.printStackTrace();
                 }
