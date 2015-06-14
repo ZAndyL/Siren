@@ -175,6 +175,7 @@ public class CameraFragment extends Fragment{
                                         }
                                     }
                                 });
+
                     }
                 });
     }

@@ -25,13 +25,13 @@ public class DisplayFragment extends Fragment {
 
         final String input = getArguments().getString("input");
 
-        inputLabel = (TextView)settingView.findViewById(R.id.inputText);
+        inputLabel = (TextView) settingView.findViewById(R.id.inputText);
         inputLabel.setText(input);
         textToSpeech(input);
 
-        playAgain = (Button)settingView.findViewById(R.id.play_again);
-        playAnother = (Button)settingView.findViewById(R.id.play_another);
-        addToLibrary = (Button)settingView.findViewById(R.id.add_to_library);
+        playAgain = (Button) settingView.findViewById(R.id.play_again);
+        playAnother = (Button) settingView.findViewById(R.id.play_another);
+        addToLibrary = (Button) settingView.findViewById(R.id.add_to_library);
 
         playAgain.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -85,4 +85,5 @@ public class DisplayFragment extends Fragment {
         //Toast.makeText(getActivity().getApplicationContext(), library, Toast.LENGTH_SHORT).show();
         sharedPreferences.edit().putString("savedSpeeches", library).apply();
     }
+
 }

@@ -14,6 +14,8 @@
         android:background="@android:color/transparent"
         android:textColor="@android:color/white"
         android:paddingBottom="70dp"
+        android:paddingLeft="5dp"
+        android:paddingRight="5dp"
         android:layout_centerHorizontal="true"
         android:layout_above="@id/inputText"/>
 
